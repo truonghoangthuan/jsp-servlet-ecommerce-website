@@ -16,6 +16,7 @@ public class DAO {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
+    // Method to get all products from database.
     public List<Product> getAllProducts() {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM products";
@@ -39,6 +40,7 @@ public class DAO {
         return list;
     }
 
+    // Method to get a product by its id from database.
     public Product getProduct(int id) {
         Product product = new Product();
         String query = "SELECT * FROM products WHERE id = " + id;
@@ -60,9 +62,10 @@ public class DAO {
         return product;
     }
 
+    // Method to get all categories from database.
     public List<Category> getAllCategories() {
         List<Category> list = new ArrayList<>();
-        String query = "select * from category";
+        String query = "SELECT * FROM category";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -80,9 +83,33 @@ public class DAO {
         return list;
     }
 
+    // Method to get a categories by its id from database.
+    public List<Product> getAllCategoryProducts(int category_id) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM products WHERE category_id = " + category_id;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Product(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getDouble(4),
+                        resultSet.getString(5)
+                ));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        List<Product> list = dao.getAllProducts();
+        List<Product> list = dao.getAllCategoryProducts(1);
         for (Product p : list) {
             System.out.println(p);
         }
