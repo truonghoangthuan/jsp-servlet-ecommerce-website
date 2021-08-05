@@ -96,28 +96,18 @@
                             <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
                             <div class="d-flex">
                                 <div class="dropdown mr-1 ml-md-auto">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                            id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                        Latest
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                        <a class="dropdown-item" href="#">Men</a>
-                                        <a class="dropdown-item" href="#">Women</a>
-                                        <a class="dropdown-item" href="#">Children</a>
-                                    </div>
-                                </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                            id="dropdownMenuReference" data-toggle="dropdown">Reference
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                        <a class="dropdown-item" href="#">Relevance</a>
-                                        <a class="dropdown-item" href="#">Name, A to Z</a>
-                                        <a class="dropdown-item" href="#">Name, Z to A</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Price, low to high</a>
-                                        <a class="dropdown-item" href="#">Price, high to low</a>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
+                                                id="dropdownMenuReference" data-toggle="dropdown">Reference
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                            <a class="dropdown-item" href="#">Relevance</a>
+                                            <a class="dropdown-item" href="#">Name, A to Z</a>
+                                            <a class="dropdown-item" href="#">Name, Z to A</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Price, low to high</a>
+                                            <a class="dropdown-item" href="#">Price, high to low</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -161,12 +151,10 @@
                     <div class="border p-4 rounded mb-4">
                         <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                         <ul class="list-unstyled mb-0">
-                            <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span
-                                    class="text-black ml-auto">(2,220)</span></a></li>
-                            <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span
-                                    class="text-black ml-auto">(2,550)</span></a></li>
-                            <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span
-                                    class="text-black ml-auto">(2,124)</span></a></li>
+                            <c:forEach items="${category_list}" var="o">
+                                <li class="mb-1 active"><a href="shop" class="d-flex"><span>${o.name}</span> <span
+                                        class="text-black ml-auto">(2,220)</span></a></li>
+                            </c:forEach>
                         </ul>
                     </div>
 
@@ -210,7 +198,6 @@
                                     class="text-black">Purple (1,075)</span>
                             </a>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -224,41 +211,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                                <a class="block-2-item" href="#">
-                                    <figure class="image">
-                                        <img src="static/images/Women.jpg" alt="" class="img-fluid">
-                                    </figure>
-                                    <div class="text">
-                                        <span class="text-uppercase">Collections</span>
-                                        <h3>Women</h3>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
-                                <a class="block-2-item" href="#">
-                                    <figure class="image">
-                                        <img src="static/images/Children.jpg" alt="" class="img-fluid">
-                                    </figure>
-                                    <div class="text">
-                                        <span class="text-uppercase">Collections</span>
-                                        <h3>Children</h3>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
-                                <a class="block-2-item" href="#">
-                                    <figure class="image">
-                                        <img src="static/images/Men.jpg" alt="" class="img-fluid">
-                                    </figure>
-                                    <div class="text">
-                                        <span class="text-uppercase">Collections</span>
-                                        <h3>Men</h3>
-                                    </div>
-                                </a>
-                            </div>
+                            <c:forEach items="${category_list}" var="o">
+                                <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item" href="shop">
+                                        <figure class="image">
+                                            <img src="static/images/${o.name}.jpg" alt="" class="img-fluid">
+                                        </figure>
+                                        <div class="text">
+                                            <span class="text-uppercase">Collections</span>
+                                            <h3>${o.name}</h3>
+                                        </div>
+                                    </a>
+                                </div>
+                            </c:forEach>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -339,7 +305,6 @@
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
-
             </div>
         </div>
     </footer>

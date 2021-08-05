@@ -1,5 +1,6 @@
 package com.ecommerce.control;
 
+import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 import com.ecommerce.dao.DAO;
 
@@ -16,8 +17,11 @@ public class ShopControl extends HttpServlet {
         DAO dao = new DAO();
         // Get all products from database.
         List<Product> productList = dao.getAllProducts();
+        // Get all categories from database.
+        List<Category> categoryList = dao.getAllCategories();
 
         request.setAttribute("product_list", productList);
+        request.setAttribute("category_list", categoryList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("shop.jsp");
         requestDispatcher.forward(request, response);
     }

@@ -153,10 +153,12 @@
                             <div class="item">
                                 <div class="block-4 text-center">
                                     <figure class="block-4-image">
-                                        <img src="${o.image}" alt="Image placeholder" class="img-fluid">
+                                        <a href="product-detail?id=${o.id}">
+                                            <img src="${o.image}" alt="Image placeholder" class="img-fluid">
+                                        </a>
                                     </figure>
                                     <div class="block-4-text p-4">
-                                        <h3><a href="#">${o.name}</a></h3>
+                                        <h3><a href="product-detail?id=${o.id}">${o.name}</a></h3>
                                         <p class="mb-0">$${o.price}</p>
                                     </div>
                                 </div>
