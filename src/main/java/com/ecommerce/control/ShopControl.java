@@ -14,9 +14,10 @@ public class ShopControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAO dao = new DAO();
-        List<Product> list = dao.getAllProducts();
+        // Get all products from database.
+        List<Product> productList = dao.getAllProducts();
 
-        request.setAttribute("list_products", list);
+        request.setAttribute("product_list", productList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("shop.jsp");
         requestDispatcher.forward(request, response);
     }

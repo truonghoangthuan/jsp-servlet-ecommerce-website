@@ -1,6 +1,7 @@
 package com.ecommerce.dao;
 
 import com.ecommerce.database.Database;
+import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
 import java.sql.Connection;
@@ -57,6 +58,26 @@ public class DAO {
             System.out.println(e.getMessage());
         }
         return product;
+    }
+
+    public List<Category> getAllCategories() {
+        List<Category> list = new ArrayList<>();
+        String query = "select * from category";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Category(
+                        resultSet.getInt(1),
+                        resultSet.getString(2)
+                ));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
     }
 
     public static void main(String[] args) {

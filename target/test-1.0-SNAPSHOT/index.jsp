@@ -132,39 +132,19 @@
     <div class="site-section site-blocks-2">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                    <a class="block-2-item" href="#">
-                        <figure class="image">
-                            <img src="static/images/women.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Collections</span>
-                            <h3>Women</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
-                    <a class="block-2-item" href="#">
-                        <figure class="image">
-                            <img src="static/images/children.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Collections</span>
-                            <h3>Children</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
-                    <a class="block-2-item" href="#">
-                        <figure class="image">
-                            <img src="static/images/men.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Collections</span>
-                            <h3>Men</h3>
-                        </div>
-                    </a>
-                </div>
+                <c:forEach items="${category_list}" var="o">
+                    <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                        <a class="block-2-item" href="shop">
+                            <figure class="image">
+                                <img src="static/images/${o.name}.jpg" alt="" class="img-fluid">
+                            </figure>
+                            <div class="text">
+                                <span class="text-uppercase">Collections</span>
+                                <h3>${o.name}</h3>
+                            </div>
+                        </a>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>
@@ -179,11 +159,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="nonloop-block-3 owl-carousel">
-                        <c:forEach items="${list_products}" var="o">
+                        <c:forEach items="${product_list}" var="o">
                             <div class="item">
                                 <div class="block-4 text-center">
                                     <figure class="block-4-image">
-                                        <img src="static/images/products/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
+                                        <img src="${o.image}" alt="Image placeholder" class="img-fluid">
                                     </figure>
                                     <div class="block-4-text p-4">
                                         <h3><a href="#">${o.name}</a></h3>

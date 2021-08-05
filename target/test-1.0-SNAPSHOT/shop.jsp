@@ -37,7 +37,7 @@
 
                     <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                         <div class="site-logo">
-                            <a href="index.jsp" class="js-logo-clone">Shoppers</a>
+                            <a href="/" class="js-logo-clone">Shoppers</a>
                         </div>
                     </div>
 
@@ -79,7 +79,7 @@
     <div class="bg-light py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mb-0"><a href="index.jsp">Home</a> <span class="mx-2 mb-0">/</span> <strong
+                <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong
                         class="text-black">Shop</strong></div>
             </div>
         </div>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     <div class="row mb-5">
-                        <c:forEach items="${list_products}" var="o">
+                        <c:forEach items="${product_list}" var="o">
                             <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                                 <div class="block-4 text-center border">
                                     <figure class="block-4-image">
@@ -227,7 +227,7 @@
                             <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
                                 <a class="block-2-item" href="#">
                                     <figure class="image">
-                                        <img src="static/images/women.jpg" alt="" class="img-fluid">
+                                        <img src="static/images/Women.jpg" alt="" class="img-fluid">
                                     </figure>
                                     <div class="text">
                                         <span class="text-uppercase">Collections</span>
@@ -238,7 +238,7 @@
                             <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
                                 <a class="block-2-item" href="#">
                                     <figure class="image">
-                                        <img src="static/images/children.jpg" alt="" class="img-fluid">
+                                        <img src="static/images/Children.jpg" alt="" class="img-fluid">
                                     </figure>
                                     <div class="text">
                                         <span class="text-uppercase">Collections</span>
@@ -249,7 +249,7 @@
                             <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
                                 <a class="block-2-item" href="#">
                                     <figure class="image">
-                                        <img src="static/images/men.jpg" alt="" class="img-fluid">
+                                        <img src="static/images/Men.jpg" alt="" class="img-fluid">
                                     </figure>
                                     <div class="text">
                                         <span class="text-uppercase">Collections</span>
