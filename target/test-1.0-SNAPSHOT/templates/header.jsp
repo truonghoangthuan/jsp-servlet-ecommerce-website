@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <header class="site-navbar" role="banner">
     <div class="site-navbar-top">
         <div class="container">
@@ -20,7 +21,7 @@
                 <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                     <div class="site-top-icons">
                         <ul>
-                            <li><a href="#"><span class="icon icon-person"></span></a></li>
+                            <li><a href="../login.jsp"><span class="icon icon-person"></span></a></li>
                             <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                             <li>
                                 <a href="cart" class="site-cart">
@@ -42,9 +43,9 @@
         <div class="container">
             <ul class="site-menu js-clone-nav d-none d-md-block">
                 <li><a href="/">Home</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="../about.jsp">About</a></li>
                 <li><a href="shop">Shop</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="../contact.jsp">Contact</a></li>
             </ul>
         </div>
     </nav>
