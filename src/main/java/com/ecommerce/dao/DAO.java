@@ -107,6 +107,30 @@ public class DAO {
         return list;
     }
 
+    // Method to search a product by a keyword.
+    public List<Product> searchProduct(String keyword) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM products WHERE name like '%" + keyword + "%'";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Product(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getDouble(4),
+                        resultSet.getString(5)
+                ));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         List<Product> list = dao.getAllCategoryProducts(1);
