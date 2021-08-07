@@ -70,7 +70,7 @@
             <div class="text-center">
                 <p class="txt1" style="color: #999999">
                     Don't have an account?
-                    <a href="#" class="txt1">
+                    <a href="register.jsp" class="txt1">
                         Create here
                     </a>
                 </p>

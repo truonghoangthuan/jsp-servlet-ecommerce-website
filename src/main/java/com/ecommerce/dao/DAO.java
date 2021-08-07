@@ -111,7 +111,8 @@ public class DAO {
     // Method to search a product by a keyword.
     public List<Product> searchProduct(String keyword) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM product WHERE product_name like '%" + keyword + "%'";
+        String query = "SELECT * FROM product WHERE " +
+                "product_name like '%" + keyword + "%'";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -135,9 +136,7 @@ public class DAO {
     // Method to get login account from database.
     public Account checkLoginAccount(String username, String password) {
         Account account = new Account();
-        String query = "SELECT * FROM account WHERE " +
-                "account_name = '" + username + "' AND " +
-                "account_password = '" + password + "'";
+        String query = "SELECT * FROM account WHERE account_name = '" + username + "' AND account_password = '" + password + "'";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -157,8 +156,39 @@ public class DAO {
         return null;
     }
 
+    // Method to check is username exist or not.
+    public boolean checkUsernameExists(String username) {
+        String query = "SELECT * FROM account WHERE account_name = '" + username + "'";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    // Method to create an account.
+    public void createAccount(String username, String password) {
+        String query = "INSERT INTO account (account_name, account_password, account_is_seller, account_is_admin)\n" +
+                "VALUES ('" + username + "', '" + password + "', 0, 0)";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        System.out.println(dao.checkLoginAccount("truonghoangthuan", "12345"));
+        System.out.println(dao.checkUsernameExists("truonghoangthuan"));
     }
 }
