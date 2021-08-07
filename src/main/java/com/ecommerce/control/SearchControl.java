@@ -14,9 +14,10 @@ import java.util.List;
 public class SearchControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAO dao = new DAO();
         // Get the search keyword from request.
         String keyword = request.getParameter("keyword");
+
+        DAO dao = new DAO();
         // Get all products with the given keyword from database.
         List<Product> productList = dao.searchProduct(keyword);
         // Get all categories from database.

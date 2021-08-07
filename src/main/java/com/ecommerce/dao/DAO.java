@@ -1,6 +1,7 @@
 package com.ecommerce.dao;
 
 import com.ecommerce.database.Database;
+import com.ecommerce.entity.Account;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
@@ -19,7 +20,7 @@ public class DAO {
     // Method to get all products from database.
     public List<Product> getAllProducts() {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM products";
+        String query = "SELECT * FROM product";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -43,7 +44,7 @@ public class DAO {
     // Method to get a product by its id from database.
     public Product getProduct(int id) {
         Product product = new Product();
-        String query = "SELECT * FROM products WHERE id = " + id;
+        String query = "SELECT * FROM product WHERE product_id = " + id;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -86,7 +87,7 @@ public class DAO {
     // Method to get a categories by its id from database.
     public List<Product> getAllCategoryProducts(int category_id) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM products WHERE category_id = " + category_id;
+        String query = "SELECT * FROM product WHERE fk_category_id = " + category_id;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -110,7 +111,7 @@ public class DAO {
     // Method to search a product by a keyword.
     public List<Product> searchProduct(String keyword) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM products WHERE name like '%" + keyword + "%'";
+        String query = "SELECT * FROM product WHERE product_name like '%" + keyword + "%'";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -131,11 +132,33 @@ public class DAO {
         return list;
     }
 
+    // Method to get login account from database.
+    public Account checkLoginAccount(String username, String password) {
+        Account account = new Account();
+        String query = "SELECT * FROM account WHERE " +
+                "account_name = '" + username + "' AND " +
+                "account_password = '" + password + "'";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                account.setId(resultSet.getInt(1));
+                account.setName(resultSet.getString(2));
+                account.setPassword(resultSet.getString(3));
+                account.setIsSeller(resultSet.getInt(4));
+                account.setIsAdmin(resultSet.getInt(5));
+                return account;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        List<Product> list = dao.getAllCategoryProducts(1);
-        for (Product p : list) {
-            System.out.println(p);
-        }
+        System.out.println(dao.checkLoginAccount("truonghoangthuan", "12345"));
     }
 }

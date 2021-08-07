@@ -14,9 +14,10 @@ import java.util.List;
 public class CategoryControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAO dao = new DAO();
-        // Get the id of the selected category
+        // Get the id of the selected category.
         int category_id = Integer.parseInt(request.getParameter("category_id"));
+
+        DAO dao = new DAO();
         // Get all products with the given category_id.
         List<Product> productList = dao.getAllCategoryProducts(category_id);
         // Get all categories from database.

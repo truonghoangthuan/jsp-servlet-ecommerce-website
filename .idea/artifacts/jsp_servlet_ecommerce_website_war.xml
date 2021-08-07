@@ -9,13 +9,8 @@
         <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
-    <root id="archive" name="test-1.0-SNAPSHOT.war">
+    <root id="archive" name="ecommerce-website-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="jsp-servlet-ecommerce-website:war exploded" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib">
-          <element id="file-copy" path="F:/java-libraries/jstl-1.2.jar" />
-        </element>
-      </element>
     </root>
   </artifact>
 </component>

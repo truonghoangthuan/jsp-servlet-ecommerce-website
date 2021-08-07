@@ -13,9 +13,10 @@ import java.util.List;
 public class ProductDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAO dao = new DAO();
         // Get the id of selected product.
         int id = Integer.parseInt(request.getParameter("id"));
+
+        DAO dao = new DAO();
         // Get product from database with the given id.
         Product product = dao.getProduct(id);
         // Get all products for feature section.
