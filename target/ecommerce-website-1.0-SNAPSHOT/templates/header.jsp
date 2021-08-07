@@ -21,7 +21,19 @@
                 <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                     <div class="site-top-icons">
                         <ul>
-                            <li><a href="../login.jsp"><span class="icon icon-person"></span></a></li>
+                            <c:if test="${sessionScope.account != null}">
+                                <li>
+                                    <img class="icon" src="../static/images/person_1.jpg" id="dropdownMenuReference"
+                                         data-toggle="dropdown" alt="image"
+                                         style="width: 1.5em; border-radius: 50%; margin-right: 10px; padding-bottom: 10px">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                        <a class="dropdown-item" href="logout">Logout</a>
+                                    </div>
+                                </li>
+                            </c:if>
+                            <c:if test="${sessionScope.account == null}">
+                                <li><a href="../login.jsp"><span class="icon icon-person"></span></a></li>
+                            </c:if>
                             <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                             <li>
                                 <a href="cart" class="site-cart">

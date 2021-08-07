@@ -11,6 +11,11 @@ import java.io.IOException;
 public class RegisterControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get username and password from request.
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -48,10 +53,5 @@ public class RegisterControl extends HttpServlet {
             request.setAttribute("alert", alert);
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

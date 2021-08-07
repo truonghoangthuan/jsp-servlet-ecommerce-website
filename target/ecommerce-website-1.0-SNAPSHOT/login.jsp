@@ -19,13 +19,20 @@
     <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" type="text/css" href="static/css/util.css">
     <link rel="stylesheet" type="text/css" href="static/css/main.css">
+
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/magnific-popup.css">
+    <link rel="stylesheet" href="static/css/jquery-ui.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="static/css/aos.css">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
 <div class="limiter">
     <div class="container-login100">
-        <div class="shadow-lg p-2 p-lg-5 rounded">
+        <div class="shadow-lg p-2 p-lg-5 rounded" data-aos="fade-up">
             <div class="wrap-login100 p-t-50 p-b-90">
                 <form action="login" method="post" class="login100-form validate-form flex-sb flex-w">
                     <span class="login100-form-title p-b-51">
@@ -89,5 +96,14 @@
 <script src="static/vendor/daterangepicker/moment.min.js"></script>
 <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
 <script src="static/vendor/countdowntime/countdowntime.js"></script>
+
+<script src="static/js/jquery-3.3.1.min.js"></script>
+<script src="static/js/jquery-ui.js"></script>
+<script src="static/js/popper.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/owl.carousel.min.js"></script>
+<script src="static/js/jquery.magnific-popup.min.js"></script>
+<script src="static/js/aos.js"></script>
+<script src="static/js/main.js"></script>
 </body>
 </html>

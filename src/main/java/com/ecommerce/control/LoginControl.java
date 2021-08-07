@@ -33,6 +33,8 @@ public class LoginControl extends HttpServlet {
             request.setAttribute("alert", alert);
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
+            HttpSession session = request.getSession();
+            session.setAttribute("account", account);
             response.sendRedirect("/");
         }
     }
