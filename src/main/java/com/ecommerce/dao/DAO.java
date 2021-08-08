@@ -5,6 +5,7 @@ import com.ecommerce.entity.Account;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -209,6 +210,33 @@ public class DAO {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+
+    // Method to remove a product from database by its id.
+    public void removeProduct(int productId) {
+        String query = "DELETE FROM product WHERE product_id = " + productId;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Method to add product to database.
+    public void addProduct(String productName, InputStream productImage, Double productPrice, String productDescription, int productCategory, int sellerId) {
+        String query = "INSERT INTO product (product_name, product_image, product_price, product_description, fk_category_id, fk_account_id) VALUES " +
+                "('" + productName + "', '" + productImage + "', " + productPrice + ", '" + productDescription + "', " + productCategory + ", " + sellerId + ")";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
