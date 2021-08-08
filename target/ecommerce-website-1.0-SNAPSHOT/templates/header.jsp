@@ -27,6 +27,7 @@
                                          data-toggle="dropdown" alt="image"
                                          style="width: 1.5em; border-radius: 50%; margin-right: 10px; padding-bottom: 10px">
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                        <a class="dropdown-item" href="#">Your profile</a>
                                         <a class="dropdown-item" href="logout">Logout</a>
                                     </div>
                                 </li>
@@ -54,10 +55,18 @@
     <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
             <ul class="site-menu js-clone-nav d-none d-md-block">
-                <li><a href="/">Home</a></li>
-                <li><a href="../about.jsp">About</a></li>
-                <li><a href="shop">Shop</a></li>
-                <li><a href="../contact.jsp">Contact</a></li>
+                <li class="${home_active}"><a href="/">Home</a></li>
+                <li class="${about_active}"><a href="../about.jsp">About</a></li>
+                <li class="${shop_active}"><a href="shop">Shop</a></li>
+                <li class="${contact_active}"><a href="../contact.jsp">Contact</a></li>
+
+                <c:if test="${sessionScope.account.isSeller == 1}">
+                    <li class="${productm_active}"><a href="product-management">Products management</a></li>
+                </c:if>
+
+                <c:if test="${sessionScope.account.isAdmin == 1}">
+                    <li class="${websitem_active}"><a href="#">Website management</a></li>
+                </c:if>
             </ul>
         </div>
     </nav>

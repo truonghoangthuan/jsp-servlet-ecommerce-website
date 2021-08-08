@@ -187,6 +187,30 @@ public class DAO {
         }
     }
 
+    // Method to get all products of a seller.
+    public List<Product> getSellerProducts(int sellerId) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM product WHERE fk_account_id = " + sellerId;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Product(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getDouble(4),
+                        resultSet.getString(5)
+                ));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         System.out.println(dao.checkUsernameExists("truonghoangthuan"));

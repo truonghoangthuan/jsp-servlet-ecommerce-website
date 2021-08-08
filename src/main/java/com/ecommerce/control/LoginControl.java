@@ -11,11 +11,6 @@ import java.io.IOException;
 @WebServlet(name = "LoginControl", value = "/login")
 public class LoginControl extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get the submitted username and password.
         String username = request.getParameter("username");

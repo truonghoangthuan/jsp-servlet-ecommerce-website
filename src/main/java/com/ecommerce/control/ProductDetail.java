@@ -21,15 +21,13 @@ public class ProductDetail extends HttpServlet {
         Product product = dao.getProduct(id);
         // Get all products for feature section.
         List<Product> productList = dao.getAllProducts();
+        // Set attribute active class for home in header.
+        String active = "active";
 
+        request.setAttribute("shop_active", active);
         request.setAttribute("product", product);
         request.setAttribute("product_list", productList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("product-detail.jsp");
         requestDispatcher.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

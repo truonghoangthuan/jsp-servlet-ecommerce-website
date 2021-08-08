@@ -22,7 +22,10 @@ public class HomeControl extends HttpServlet {
         List<Product> productList = dao.getAllProducts();
         // Get all categories from database.
         List<Category> categoryList = dao.getAllCategories();
+        // Set attribute active class for home in header.
+        String active = "active";
 
+        request.setAttribute("home_active", active);
         request.setAttribute("product_list", productList);
         request.setAttribute("category_list", categoryList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");

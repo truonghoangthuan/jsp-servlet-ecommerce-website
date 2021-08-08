@@ -56,9 +56,6 @@
                         <span class="focus-input100"></span>
                     </div>
 
-                    <div class="flex-sb-m w-full p-t-3 p-b-24">
-                    </div>
-
                     <div class="container-login100-form-btn m-t-17">
                         <button type="submit" class="login100-form-btn">
                             Sign up
