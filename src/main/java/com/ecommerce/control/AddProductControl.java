@@ -3,13 +3,12 @@ package com.ecommerce.control;
 import com.ecommerce.dao.DAO;
 import com.ecommerce.entity.Account;
 
-import javax.servlet.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @WebServlet(name = "AddProductControl", value = "/add-product")
 @MultipartConfig
@@ -24,11 +23,7 @@ public class AddProductControl extends HttpServlet {
 
         // Get upload image.
         Part part = request.getPart("product-image");
-        System.out.println(part);
-        String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-        System.out.println(fileName);
         InputStream inputStream = part.getInputStream();
-        System.out.println(inputStream);
 
         // Get the seller id for product.
         HttpSession session = request.getSession();

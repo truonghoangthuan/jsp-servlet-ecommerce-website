@@ -1,10 +1,5 @@
 package com.ecommerce.entity;
 
-import com.mysql.cj.jdbc.Blob;
-import com.mysql.cj.jdbc.BlobFromLocator;
-
-import java.io.InputStream;
-
 public class Product {
     private int id;
     private String name;
@@ -12,25 +7,16 @@ public class Product {
     private String description;
 
     private byte[] image;
-    private InputStream inputStream;
-    private String base64image;
+    private String base64Image;
 
 
     public Product() {
     }
 
-    public Product(int id, String name, InputStream inputStream, double price, String description) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.inputStream = inputStream;
-    }
-
     public Product(int id, String name, String base64image, double price, String description) {
         this.id = id;
         this.name = name;
-        this.base64image = base64image;
+        this.base64Image = base64image;
         this.price = price;
         this.description = description;
     }
@@ -75,19 +61,11 @@ public class Product {
         this.description = description;
     }
 
-    public String getBase64image() {
-        return base64image;
+    public String getBase64Image() {
+        return base64Image;
     }
 
-    public void setBase64image(String base64image) {
-        this.base64image = base64image;
-    }
-
-    public InputStream getInputStream() {
-        return inputStream;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 }

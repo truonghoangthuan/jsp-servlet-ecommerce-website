@@ -18,6 +18,26 @@ public class DAO {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+        System.out.println(dao.checkUsernameExists("truonghoangthuan"));
+    }
+
+    // Method to get blob image from database.
+    private String getBase64Image(Blob blob) throws SQLException, IOException {
+        InputStream inputStream = blob.getBinaryStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            byteArrayOutputStream.write(buffer, 0, bytesRead);
+        }
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+        return Base64.getEncoder().encodeToString(imageBytes);
+    }
+
     // Method to get all products from database.
     public List<Product> getAllProducts() {
         List<Product> list = new ArrayList<>();
@@ -28,15 +48,18 @@ public class DAO {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new Product(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getDouble(4),
-                        resultSet.getString(5)
-                ));
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                double price = resultSet.getDouble(4);
+                String description = resultSet.getString(5);
+
+                // Get base64 image to display.
+                Blob blob = resultSet.getBlob(3);
+                String base64Image = getBase64Image(blob);
+
+                list.add(new Product(id, name, base64Image, price, description));
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             System.out.println(e.getMessage());
         }
         return list;
@@ -54,11 +77,12 @@ public class DAO {
             while (resultSet.next()) {
                 product.setId(resultSet.getInt(1));
                 product.setName(resultSet.getString(2));
-                product.setImage(resultSet.getBytes(3));
+//                product.setImage(resultSet.getBytes(3));
+                product.setBase64Image(getBase64Image(resultSet.getBlob(3)));
                 product.setPrice(resultSet.getDouble(4));
                 product.setDescription(resultSet.getString(5));
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             System.out.println(e.getMessage());
         }
         return product;
@@ -95,15 +119,18 @@ public class DAO {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new Product(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getDouble(4),
-                        resultSet.getString(5)
-                ));
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                double price = resultSet.getDouble(4);
+                String description = resultSet.getString(5);
+
+                // Get base64 image to display.
+                Blob blob = resultSet.getBlob(3);
+                String base64Image = getBase64Image(blob);
+
+                list.add(new Product(id, name, base64Image, price, description));
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
         }
         return list;
@@ -120,15 +147,18 @@ public class DAO {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new Product(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getDouble(4),
-                        resultSet.getString(5)
-                ));
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                double price = resultSet.getDouble(4);
+                String description = resultSet.getString(5);
+
+                // Get base64 image to display.
+                Blob blob = resultSet.getBlob(3);
+                String base64Image = getBase64Image(blob);
+
+                list.add(new Product(id, name, base64Image, price, description));
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
         }
         return list;
@@ -200,30 +230,16 @@ public class DAO {
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);
-                Blob blob = resultSet.getBlob(3);
-                Double price = resultSet.getDouble(4);
+                double price = resultSet.getDouble(4);
                 String description = resultSet.getString(5);
 
-                InputStream inputStream = blob.getBinaryStream();
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                byte[] buffer = new byte[4096];
-                int bytesRead = -1;
+                // Get base64 image to display.
+                Blob blob = resultSet.getBlob(3);
+                String base64Image = getBase64Image(blob);
 
-                while (true) {
-                    try {
-                        if (!((bytesRead = inputStream.read(buffer)) != -1)) break;
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    byteArrayOutputStream.write(buffer, 0, bytesRead);
-                }
-                byte[] imageBytes = byteArrayOutputStream.toByteArray();
-
-                String base64image = Base64.getEncoder().encodeToString(imageBytes);
-
-                list.add(new Product(id, name, base64image, price, description));
+                list.add(new Product(id, name, base64Image, price, description));
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
         }
         return list;
@@ -261,10 +277,5 @@ public class DAO {
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-        DAO dao = new DAO();
-        System.out.println(dao.checkUsernameExists("truonghoangthuan"));
     }
 }

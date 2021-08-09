@@ -46,7 +46,7 @@
                                     </td>
 
                                     <td class="product-thumbnail">
-                                        <img src="data:image/jpg;base64,${o.base64image}" alt="Image" class="img-fluid">
+                                        <img src="data:image/jpg;base64,${o.base64Image}" alt="Image" class="img-fluid">
                                     </td>
 
                                     <td>
@@ -90,7 +90,8 @@
                         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
                              aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <form class="modal-content" action="add-product" method="post" enctype="multipart/form-data">
+                                <form class="modal-content" action="add-product" method="post"
+                                      enctype="multipart/form-data">
                                     <div class="modal-header">
                                         <h5 class="modal-title text-black" id="exampleModalLabel">
                                             Product information
