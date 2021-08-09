@@ -46,7 +46,7 @@
                                     </td>
 
                                     <td class="product-thumbnail">
-                                        <img src="${o.image}" alt="Image" class="img-fluid">
+                                        <img src="data:image/jpg;base64,${o.base64image}" alt="Image" class="img-fluid">
                                     </td>
 
                                     <td>

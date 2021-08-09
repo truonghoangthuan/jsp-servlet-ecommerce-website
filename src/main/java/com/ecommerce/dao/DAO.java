@@ -5,12 +5,12 @@ import com.ecommerce.entity.Account;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class DAO {
@@ -54,7 +54,7 @@ public class DAO {
             while (resultSet.next()) {
                 product.setId(resultSet.getInt(1));
                 product.setName(resultSet.getString(2));
-                product.setImage(resultSet.getString(3));
+                product.setImage(resultSet.getBytes(3));
                 product.setPrice(resultSet.getDouble(4));
                 product.setDescription(resultSet.getString(5));
             }
@@ -198,13 +198,30 @@ public class DAO {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new Product(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getDouble(4),
-                        resultSet.getString(5)
-                ));
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                Blob blob = resultSet.getBlob(3);
+                Double price = resultSet.getDouble(4);
+                String description = resultSet.getString(5);
+
+                InputStream inputStream = blob.getBinaryStream();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead = -1;
+
+                while (true) {
+                    try {
+                        if (!((bytesRead = inputStream.read(buffer)) != -1)) break;
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    byteArrayOutputStream.write(buffer, 0, bytesRead);
+                }
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+                String base64image = Base64.getEncoder().encodeToString(imageBytes);
+
+                list.add(new Product(id, name, base64image, price, description));
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
@@ -227,12 +244,19 @@ public class DAO {
 
     // Method to add product to database.
     public void addProduct(String productName, InputStream productImage, Double productPrice, String productDescription, int productCategory, int sellerId) {
-        String query = "INSERT INTO product (product_name, product_image, product_price, product_description, fk_category_id, fk_account_id) VALUES " +
-                "('" + productName + "', '" + productImage + "', " + productPrice + ", '" + productDescription + "', " + productCategory + ", " + sellerId + ")";
+        String query = "INSERT INTO product (product_name, product_image, product_price, product_description, fk_category_id, fk_account_id) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
             preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, productName);
+            preparedStatement.setBinaryStream(2, productImage);
+            preparedStatement.setDouble(3, productPrice);
+            preparedStatement.setString(4, productDescription);
+            preparedStatement.setInt(5, productCategory);
+            preparedStatement.setInt(6, sellerId);
+
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
