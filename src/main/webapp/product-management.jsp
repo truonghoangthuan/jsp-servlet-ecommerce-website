@@ -54,117 +54,10 @@
                                     </td>
 
                                     <td>
-                                        <!-- Button trigger edit product modal -->
-                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                data-target="#editProductModal"
-                                                style="background-color: green; border-color: green">
+                                        <a href="edit-product?product-id=${o.id}" class="btn btn-primary btn-sm"
+                                           style="background-color: green ; border-color: green">
                                             <span class="icon icon-pencil"></span>
-                                        </button>
-
-                                            <%-- Edit product modal --%>
-                                        <div class="modal fade bd-example-modal-lg" id="editProductModal" tabindex="-1"
-                                             role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                <form class="modal-content" action="edit-product?product-id=${o.id}"
-                                                      method="post" enctype="multipart/form-data">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title text-black" id="editProductModalLabel">
-                                                            Product information
-                                                        </h5>
-
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="modal-body" style="padding: 0; text-align: left">
-                                                        <div class="p-3">
-                                                            <div class="form-group row">
-                                                                <div class="col-md-12">
-                                                                    <label for="edit-product-name" class="text-black">
-                                                                        Name <span class="text-danger">*</span>
-                                                                    </label>
-
-                                                                    <input name="product-name" type="text"
-                                                                           class="form-control"
-                                                                           id="edit-product-name" value="${o.name}">
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="form-group row">
-                                                                <div class="col-md-12">
-                                                                    <label for="edit-product-image" class="text-black">
-                                                                        Image <span class="text-danger">*</span>
-                                                                    </label>
-
-                                                                    <input name="product-image" type="file"
-                                                                           class="form-control"
-                                                                           id="edit-product-image">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group row">
-                                                                <div class="col-md-12">
-                                                                    <label for="edit-product-price" class="text-black">
-                                                                        Price <span class="text-danger">*</span>
-                                                                    </label>
-
-                                                                    <input name="product-price" type="text"
-                                                                           class="form-control"
-                                                                           id="edit-product-price" value="${o.price}">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group row">
-                                                                <div class="col-md-12">
-                                                                    <label for="edit-product-description"
-                                                                           class="text-black">
-                                                                        Description <span class="text-danger">*</span>
-                                                                    </label>
-
-                                                                    <textarea name="product-description"
-                                                                              id="edit-product-description"
-                                                                              cols="30" rows="7"
-                                                                              class="form-control"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group row">
-                                                                <div class="col-md-12">
-                                                                    <label for="edit-product-category"
-                                                                           class="text-black">
-                                                                        Category <span class="text-danger">*</span>
-                                                                    </label>
-
-                                                                    <select name="product-category"
-                                                                            id="edit-product-category"
-                                                                            class="form-control">
-                                                                        <c:forEach items="${category_list}" var="o">
-                                                                            <option value="${o.id}">${o.name}</option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button"
-                                                                class="btn btn-outline-primary btn-sm btn-block"
-                                                                data-dismiss="modal" style="margin-top: 0">
-                                                            Cancel
-                                                        </button>
-
-                                                        <button type="submit" class="btn btn-primary btn-sm btn-block"
-                                                                style="margin-top: 0">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        </a>
 
                                         <a href="remove-product?product-id=${o.id}" class="btn btn-primary btn-sm"
                                            style="background-color: red ; border-color: red">
@@ -216,10 +109,10 @@
                                                     <label for="product-name" class="text-black">
                                                         Name <span class="text-danger">*</span>
                                                     </label>
+
                                                     <input name="product-name" type="text" class="form-control"
                                                            id="product-name">
                                                 </div>
-
                                             </div>
 
                                             <div class="form-group row">

@@ -17,7 +17,7 @@ public class AddProductControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get product information from request.
         String productName = request.getParameter("product-name");
-        Double productPrice = Double.valueOf(request.getParameter("product-price"));
+        double productPrice = Double.parseDouble((request.getParameter("product-price")));
         String productDescription = request.getParameter("product-description");
         int productCategory = Integer.parseInt(request.getParameter("product-category"));
 

@@ -258,7 +258,7 @@ public class DAO {
     }
 
     // Method to add product to database.
-    public void addProduct(String productName, InputStream productImage, Double productPrice, String productDescription, int productCategory, int sellerId) {
+    public void addProduct(String productName, InputStream productImage, double productPrice, String productDescription, int productCategory, int sellerId) {
         String query = "INSERT INTO product (product_name, product_image, product_price, product_description, fk_category_id, fk_account_id) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -279,20 +279,19 @@ public class DAO {
     }
 
     // Method to edit product in database.
-    public void editProduct(int productId ,String productName, InputStream productImage, Double productPrice, String productDescription, int productCategory, int sellerId) {
-        String query = "UPDATE product SET product_name = ?, product_image = ?, product_price = ?, product_description = ?, fk_category_id = ?, fk_account_id = ? WHERE product_id = ?";
+    public void editProduct(int productId, String productName, InputStream productImage, double productPrice, String productDescription, int productCategory) {
+        String query = "UPDATE product SET product_name = ?, product_image = ?, product_price = ?, product_description = ?, fk_category_id = ? WHERE product_id = ?";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
             preparedStatement = connection.prepareStatement(query);
 
-            preparedStatement.setInt(1, productId);
-            preparedStatement.setString(2, productName);
-            preparedStatement.setBinaryStream(3, productImage);
-            preparedStatement.setDouble(4, productPrice);
-            preparedStatement.setString(5, productDescription);
-            preparedStatement.setInt(6, productCategory);
-            preparedStatement.setInt(7, sellerId);
+            preparedStatement.setString(1, productName);
+            preparedStatement.setBinaryStream(2, productImage);
+            preparedStatement.setDouble(3, productPrice);
+            preparedStatement.setString(4, productDescription);
+            preparedStatement.setInt(5, productCategory);
+            preparedStatement.setInt(6, productId);
 
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
