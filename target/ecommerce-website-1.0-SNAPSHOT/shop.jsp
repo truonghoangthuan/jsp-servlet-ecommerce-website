@@ -50,11 +50,11 @@
                     <div class="row mb-5">
                         <c:forEach items="${product_list}" var="o">
                             <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                                <div class="block-4 text-center border">
+                                <div class="block-4 text-center border" style="height: 100%">
                                     <figure class="block-4-image">
                                         <a href="product-detail?id=${o.id}">
                                             <img src="data:image/jpg;base64,${o.base64Image}" alt="Image placeholder"
-                                                 class="img-fluid">
+                                                 class="img-fluid" style="height: 100%">
                                         </a>
                                     </figure>
                                     <div class="block-4-text p-4">
@@ -69,13 +69,18 @@
                         <div class="col-md-12 text-center">
                             <div class="site-block-27">
                                 <ul>
-                                    <li><a href="#">&lt;</a></li>
+                                    <c:if test="${page_active > 1}">
+                                        <li><a href="shop?index=${page_active - 1}">&lt;</a></li>
+                                    </c:if>
 
                                     <c:forEach begin="1" end="${total_pages}" var="i">
-                                        <li class="${(page_active == i) ? "active" : " "}"><a href="shop?index=${i}">${i}</a></li>
+                                        <li class="${(page_active == i) ? "active" : " "}"><a
+                                                href="shop?index=${i}">${i}</a></li>
                                     </c:forEach>
 
-                                    <li><a href="#">&gt;</a></li>
+                                    <c:if test="${page_active < total_pages}">
+                                        <li><a href="shop?index=${page_active + 1}">&gt;</a></li>
+                                    </c:if>
                                 </ul>
                             </div>
                         </div>

@@ -7,6 +7,7 @@
 
 <body>
 <div class="site-wrap">
+    <% request.setAttribute("about_active", "active"); %>
     <jsp:include page="templates/header.jsp"/>
 
     <div class="bg-light py-3">
