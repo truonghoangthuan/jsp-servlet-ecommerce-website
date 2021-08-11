@@ -14,17 +14,34 @@ import java.util.List;
 public class ShopControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get page number from request.
+        String index = request.getParameter("index");
+        if (index == null) {
+            index = "1";
+        }
+
         DAO dao = new DAO();
-        // Get all products from database.
-        List<Product> productList = dao.getAllProducts();
+        // Get 9 products from database to display on each page.
+        List<Product> productList = dao.get9ProductsOfPage(Integer.parseInt(index));
+
         // Get all categories from database.
         List<Category> categoryList = dao.getAllCategories();
-        // Set attribute active class for home in header.
+
+        // Get total products to count pages.
+        int totalProduct = dao.getAmountOfProducts();
+        int totalPages = totalProduct / 10;
+        if (totalProduct % 10 != 0) {
+            totalPages++;
+        }
+
+        // Set attribute active class for home in header and page number.
         String active = "active";
 
-        request.setAttribute("shop_active", active);
         request.setAttribute("product_list", productList);
         request.setAttribute("category_list", categoryList);
+        request.setAttribute("total_pages", totalPages);
+        request.setAttribute("shop_active", active);
+        request.setAttribute("page_active", index);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("shop.jsp");
         requestDispatcher.forward(request, response);
     }

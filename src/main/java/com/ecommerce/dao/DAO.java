@@ -298,4 +298,49 @@ public class DAO {
             System.out.println(e.getMessage());
         }
     }
+
+    // Method to get 9 products to display on each page.
+    public List<Product> get9ProductsOfPage(int index) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM product LIMIT " + ((index - 1) * 9) + ", 9";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery(query);
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                double price = resultSet.getDouble(4);
+                String description = resultSet.getString(5);
+
+                // Get base64 image to display.
+                Blob blob = resultSet.getBlob(3);
+                String base64Image = getBase64Image(blob);
+
+                list.add(new Product(id, name, base64Image, price, description));
+            }
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    // Method to get total products in database.
+    public int getAmountOfProducts() {
+        int totalProduct = 0;
+        String query = "SELECT COUNT(*) FROM product";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                totalProduct = resultSet.getInt(1);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return totalProduct;
+    }
 }

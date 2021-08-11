@@ -53,7 +53,8 @@
                                 <div class="block-4 text-center border">
                                     <figure class="block-4-image">
                                         <a href="product-detail?id=${o.id}">
-                                            <img src="data:image/jpg;base64,${o.base64Image}" alt="Image placeholder" class="img-fluid">
+                                            <img src="data:image/jpg;base64,${o.base64Image}" alt="Image placeholder"
+                                                 class="img-fluid">
                                         </a>
                                     </figure>
                                     <div class="block-4-text p-4">
@@ -69,11 +70,11 @@
                             <div class="site-block-27">
                                 <ul>
                                     <li><a href="#">&lt;</a></li>
-                                    <li class="active"><span>1</span></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
+
+                                    <c:forEach begin="1" end="${total_pages}" var="i">
+                                        <li class="${(page_active == i) ? "active" : " "}"><a href="shop?index=${i}">${i}</a></li>
+                                    </c:forEach>
+
                                     <li><a href="#">&gt;</a></li>
                                 </ul>
                             </div>
