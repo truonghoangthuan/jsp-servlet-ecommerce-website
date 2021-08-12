@@ -37,7 +37,7 @@
                             </c:if>
                             <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                             <li>
-                                <a href="cart" class="site-cart">
+                                <a href="cart.jsp" class="site-cart">
                                     <span class="icon icon-shopping_cart"></span>
                                     <span class="count">2</span>
                                 </a>
@@ -54,7 +54,7 @@
 
     <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
-            <ul class="site-menu js-clone-nav d-none d-md-block">
+            <ul class="site-menu js-clone-nav d-none d-md-block" style="padding: 0">
                 <li class="${home_active}"><a href="/">Home</a></li>
                 <li class="${about_active}"><a href="../about.jsp">About</a></li>
                 <li class="${shop_active}"><a href="shop">Shop</a></li>
