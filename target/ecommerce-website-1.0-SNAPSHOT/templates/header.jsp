@@ -23,7 +23,7 @@
                         <ul>
                             <c:if test="${sessionScope.account != null}">
                                 <li>
-                                    <img class="icon" src="../static/images/person_1.jpg" id="dropdownMenuReference"
+                                    <img class="icon" src="data:image/jpg;base64,${account.base64Image}" id="dropdownMenuReference"
                                          data-toggle="dropdown" alt="image"
                                          style="width: 1.5em; border-radius: 50%; margin-right: 10px; padding-bottom: 10px">
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
@@ -39,7 +39,9 @@
                             <li>
                                 <a href="cart.jsp" class="site-cart">
                                     <span class="icon icon-shopping_cart"></span>
-                                    <span class="count">2</span>
+                                    <c:if test="${order.cartProducts.size() != null}">
+                                        <span class="count">${order.cartProducts.size()}</span>
+                                    </c:if>
                                 </a>
                             </li>
                             <li class="d-inline-block d-md-none ml-md-0"><a href="#"

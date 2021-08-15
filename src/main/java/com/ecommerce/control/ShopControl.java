@@ -28,7 +28,7 @@ public class ShopControl extends HttpServlet {
         List<Category> categoryList = dao.getAllCategories();
 
         // Get total products to count pages.
-        int totalProduct = dao.getAmountOfProducts();
+        int totalProduct = dao.getAmountOfTotalProducts();
         int totalPages = totalProduct / 10;
         if (totalProduct % 10 != 0) {
             totalPages++;

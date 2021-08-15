@@ -178,9 +178,11 @@ public class DAO {
                 account.setPassword(resultSet.getString(3));
                 account.setIsSeller(resultSet.getInt(4));
                 account.setIsAdmin(resultSet.getInt(5));
+                account.setBase64Image(getBase64Image(resultSet.getBlob(6)));
+
                 return account;
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
         }
         return null;
@@ -329,7 +331,7 @@ public class DAO {
     }
 
     // Method to get total products in database.
-    public int getAmountOfProducts() {
+    public int getAmountOfTotalProducts() {
         int totalProduct = 0;
         String query = "SELECT COUNT(*) FROM product";
         try {

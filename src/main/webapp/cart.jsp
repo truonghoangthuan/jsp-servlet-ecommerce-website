@@ -20,9 +20,9 @@
     </div>
 
     <div class="site-section">
-        <div class="container">
+        <form class="container" method="get" action="checkout">
             <div class="row mb-5">
-                <form class="col-md-12" method="post">
+                <div class="col-md-12">
                     <div class="site-blocks-table">
                         <table class="table table-bordered">
                             <thead>
@@ -43,36 +43,51 @@
                                         <img src="data:image/jpg;base64,${o.product.base64Image}" alt="Image"
                                              class="img-fluid">
                                     </td>
-                                    <td class="product-name">
-                                        <h2 class="h5 text-black">${o.product.name}</h2>
-                                    </td>
-                                    <td>$${o.price}</td>
+
                                     <td>
-                                        <div class="input-group mb-3" style="max-width: 120px;">
+                                        <input name="product-name" class="form-control-plaintext h5 text-black"
+                                               value="${o.product.name}" style="text-align: center" readonly>
+                                    </td>
+
+                                    <td>
+                                        <input name="product-price" class="form-control-plaintext h5 text-black"
+                                               value="${o.price}" style="text-align: center" readonly>
+                                    </td>
+
+                                    <td style="min-width: 180px">
+                                        <div class="input-group" style="max-width: fit-content; margin: 0;">
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-outline-primary js-btn-minus" type="button">
                                                     &minus;
                                                 </button>
                                             </div>
-                                            <input type="text" class="form-control text-center" value="${o.quantity}"
+
+                                            <input name="product-quantity" type="text" class="form-control text-center"
+                                                   value="${o.quantity}"
                                                    placeholder=""
                                                    aria-label="Example text with button addon"
                                                    aria-describedby="button-addon1">
+
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;
+                                                <button class="btn btn-outline-primary js-btn-plus" type="button">
+                                                    &plus;
                                                 </button>
                                             </div>
                                         </div>
-
                                     </td>
-                                    <td>$${o.price * o.quantity}</td>
+
+                                    <td>
+                                        <input name="product-price-total" class="form-control-plaintext h5 text-black"
+                                               value="${o.price * o.quantity}" style="text-align: center" readonly>
+                                    </td>
+
                                     <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
                     </div>
-                </form>
+                </div>
             </div>
 
             <div class="row">
@@ -114,16 +129,16 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="checkout.jsp" class="btn btn-primary btn-lg py-3 btn-block">
+                                    <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">
                                         Proceed To Checkout
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <jsp:include page="templates/footer.jsp"/>
