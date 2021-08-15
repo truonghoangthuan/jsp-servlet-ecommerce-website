@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,62 +35,40 @@
                                 <th class="product-remove">Remove</th>
                             </tr>
                             </thead>
+
                             <tbody>
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="static/images/cloth_1.jpg" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <h2 class="h5 text-black">Top Up T-Shirt</h2>
-                                </td>
-                                <td>$49.00</td>
-                                <td>
-                                    <div class="input-group mb-3" style="max-width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;
-                                            </button>
+                            <c:forEach items="${order.cartProducts}" var="o">
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="data:image/jpg;base64,${o.product.base64Image}" alt="Image"
+                                             class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">${o.product.name}</h2>
+                                    </td>
+                                    <td>$${o.price}</td>
+                                    <td>
+                                        <div class="input-group mb-3" style="max-width: 120px;">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-primary js-btn-minus" type="button">
+                                                    &minus;
+                                                </button>
+                                            </div>
+                                            <input type="text" class="form-control text-center" value="${o.quantity}"
+                                                   placeholder=""
+                                                   aria-label="Example text with button addon"
+                                                   aria-describedby="button-addon1">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;
+                                                </button>
+                                            </div>
                                         </div>
-                                        <input type="text" class="form-control text-center" value="1" placeholder=""
-                                               aria-label="Example text with button addon"
-                                               aria-describedby="button-addon1">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;
-                                            </button>
-                                        </div>
-                                    </div>
 
-                                </td>
-                                <td>$49.00</td>
-                                <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
-                            </tr>
-
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="static/images/cloth_2.jpg" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <h2 class="h5 text-black">Polo Shirt</h2>
-                                </td>
-                                <td>$49.00</td>
-                                <td>
-                                    <div class="input-group mb-3" style="max-width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control text-center" value="1" placeholder=""
-                                               aria-label="Example text with button addon"
-                                               aria-describedby="button-addon1">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </td>
-                                <td>$49.00</td>
-                                <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
-                            </tr>
+                                    </td>
+                                    <td>$${o.price * o.quantity}</td>
+                                    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -100,10 +79,7 @@
                 <div class="col-md-6">
                     <div class="row mb-5">
                         <div class="col-md-6 mb-3 mb-md-0">
-                            <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                            <a href="shop" class="btn btn-outline-primary btn-sm btn-block">Continue shopping</a>
                         </div>
                     </div>
                     <div class="row">
@@ -127,14 +103,6 @@
                                     <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <span class="text-black">Subtotal</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
-                                </div>
-                            </div>
                             <div class="row mb-5">
                                 <div class="col-md-6">
                                     <span class="text-black">Total</span>
@@ -146,9 +114,9 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary btn-lg py-3 btn-block"
-                                            onclick="window.location='checkout.jsp'">Proceed To Checkout
-                                    </button>
+                                    <a href="checkout.jsp" class="btn btn-primary btn-lg py-3 btn-block">
+                                        Proceed To Checkout
+                                    </a>
                                 </div>
                             </div>
                         </div>

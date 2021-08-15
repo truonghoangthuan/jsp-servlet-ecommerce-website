@@ -204,13 +204,15 @@ public class DAO {
     }
 
     // Method to create an account.
-    public void createAccount(String username, String password) {
-        String query = "INSERT INTO account (account_name, account_password, account_is_seller, account_is_admin)\n" +
-                "VALUES ('" + username + "', '" + password + "', 0, 0)";
+    public void createAccount(String username, String password, InputStream image) {
+        String query = "INSERT INTO account (account_name, account_password, account_image, account_is_seller, account_is_admin) VALUES (?, ?, ?, 0, 0)";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
             preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            preparedStatement.setBinaryStream(3, image);
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());

@@ -7,15 +7,19 @@ public class Account {
     private int isSeller;
     private int isAdmin;
 
+    private byte[] image;
+    private String base64Image;
+
     public Account() {
     }
 
-    public Account(int id, String name, String password, int isSeller, int isAdmin) {
+    public Account(int id, String name, String password, int isSeller, int isAdmin, String base64Image) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.isSeller = isSeller;
         this.isAdmin = isAdmin;
+        this.base64Image = base64Image;
     }
 
     public int getId() {
@@ -58,14 +62,19 @@ public class Account {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", isSeller=" + isSeller +
-                ", isAdmin=" + isAdmin +
-                '}';
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getBase64Image() {
+        return base64Image;
+    }
+
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 }

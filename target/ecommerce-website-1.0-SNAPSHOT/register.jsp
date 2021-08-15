@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-    <title>Login</title>
+    <title>Sign up</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="static/images/logo.png"/>
@@ -34,12 +34,25 @@
     <div class="container-login100">
         <div class="shadow-lg p-2 p-lg-5 rounded" data-aos="fade-up">
             <div class="wrap-login100 p-t-50 p-b-90">
-                <form action="register" method="post" class="login100-form validate-form flex-sb flex-w">
-                    <span class="login100-form-title p-b-51">
+                <form action="register" method="post"
+                      class="login100-form validate-form flex-sb flex-w justify-content-center"
+                      enctype="multipart/form-data">
+                    <span class="login100-form-title m-b-20">
                         Create account
                     </span>
 
                     ${alert}
+
+                    <div class="m-b-16">
+                        <label class="m-0" for="imgInp">
+                            <figure class="d-flex justify-content-center m-0">
+                                <img id="blah" src="static/images/blank_avatar.png" alt="your image"
+                                     style="border-radius: 50%; height: 8em; width: 8em">
+                            </figure>
+                            <figcaption>Click here to change profile image</figcaption>
+                        </label>
+                        <input name="profile-image" type="file" id="imgInp" style="display: none;">
+                    </div>
 
                     <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
                         <input class="input100" type="text" name="username" placeholder="Username">
@@ -52,7 +65,8 @@
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
-                        <input class="input100" type="password" name="repeat-password" placeholder="Repeat your password">
+                        <input class="input100" type="password" name="repeat-password"
+                               placeholder="Repeat your password">
                         <span class="focus-input100"></span>
                     </div>
 
@@ -95,5 +109,14 @@
 <script src="static/js/jquery.magnific-popup.min.js"></script>
 <script src="static/js/aos.js"></script>
 <script src="static/js/main.js"></script>
+
+<script>
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+</script>
 </body>
 </html>

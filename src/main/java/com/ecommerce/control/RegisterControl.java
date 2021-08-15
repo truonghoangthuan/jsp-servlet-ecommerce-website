@@ -2,24 +2,29 @@ package com.ecommerce.control;
 
 import com.ecommerce.dao.DAO;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 
 @WebServlet(name = "RegisterControl", value = "/register")
+@MultipartConfig
 public class RegisterControl extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get username and password from request.
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String repeatPassword = request.getParameter("repeat-password");
+
+        // Set default profile image for account.
+        Part part = request.getPart("profile-image");
+        InputStream inputStream = part.getInputStream();
 
         DAO dao = new DAO();
         // Check password and repeatPassword are the same.
@@ -44,7 +49,7 @@ public class RegisterControl extends HttpServlet {
         }
         // Insert username, password to database and create account.
         else {
-            dao.createAccount(username, password);
+            dao.createAccount(username, password, inputStream);
             String alert = "<div class=\"alert alert-success wrap-input100\">\n" +
                     "                        <p style=\"font-family: Ubuntu-Bold; font-size: 18px; margin: 0.25em 0; text-align: center\">\n" +
                     "                            Create account successfully!\n" +
