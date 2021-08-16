@@ -66,7 +66,7 @@ public class CartControl extends HttpServlet {
                     session.setAttribute("order", order);
                 }
             }
-            response.sendRedirect("cart.jsp");
+            response.sendRedirect("product-detail?id=" + productId);
         }
     }
 

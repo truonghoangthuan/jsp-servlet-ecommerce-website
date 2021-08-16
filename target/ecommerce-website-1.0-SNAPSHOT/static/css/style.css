@@ -641,7 +641,7 @@ a {
     color: #212529;
     font-size: 18px; }
   .site-blocks-table td {
-    padding: 20px;
+    /*padding: 20px;*/
     text-align: center;
     vertical-align: middle;
     color: #212529; }
