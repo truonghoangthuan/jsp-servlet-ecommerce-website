@@ -20,7 +20,7 @@
     </div>
 
     <div class="site-section">
-        <form class="container" method="get" action="checkout">
+        <form class="container" method="post" action="checkout">
             <div class="row mb-5">
                 <div class="col-md-12">
                     <div class="site-blocks-table">

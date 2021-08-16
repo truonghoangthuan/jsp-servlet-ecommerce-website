@@ -20,7 +20,7 @@
     </div>
 
     <div class="site-section">
-        <form class="container" method="get" action="checkout">
+        <form class="container" method="post" action="checkout">
             <div class="row mb-5">
                 <div class="col-md-12">
                     <div class="site-blocks-table">
@@ -120,10 +120,12 @@
                             </div>
                             <div class="row mb-5">
                                 <div class="col-md-6">
-                                    <span class="text-black">Total</span>
+                                    <span class="text-black" style="font-size: 1.5em">Total</span>
                                 </div>
+
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
+                                    <input name="order-price-total" class="form-control-plaintext h5 text-black"
+                                           value="${total_price}" style="text-align: center" readonly>
                                 </div>
                             </div>
 
