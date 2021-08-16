@@ -23,9 +23,18 @@
                         <ul>
                             <c:if test="${sessionScope.account != null}">
                                 <li>
-                                    <img class="icon" src="data:image/jpg;base64,${account.base64Image}" id="dropdownMenuReference"
-                                         data-toggle="dropdown" alt="image"
-                                         style="width: 1.5em; border-radius: 50%; margin-right: 10px; padding-bottom: 10px">
+                                    <c:if test="${account.base64Image != null}">
+                                        <img class="icon" src="data:image/jpg;base64,${account.base64Image}"
+                                             id="dropdownMenuReference"
+                                             data-toggle="dropdown" alt="image"
+                                             style="width: 1.5em; border-radius: 50%; margin-right: 10px; margin-bottom: 10px">
+                                    </c:if>
+                                    <c:if test="${account.base64Image == null}">
+                                        <img class="icon" src="../static/images/blank_avatar.png"
+                                             id="dropdownMenuReference"
+                                             data-toggle="dropdown" alt="image"
+                                             style="width: 1.5em; border-radius: 50%; margin-right: 10px; margin-bottom: 10px">
+                                    </c:if>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
                                         <a class="dropdown-item" href="#">Your profile</a>
                                         <a class="dropdown-item" href="logout">Logout</a>
