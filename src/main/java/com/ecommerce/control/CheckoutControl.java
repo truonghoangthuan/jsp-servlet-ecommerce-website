@@ -25,11 +25,16 @@ public class CheckoutControl extends HttpServlet {
             response.sendRedirect("login.jsp");
         }
         else {
-//            double totalPrice = (double) session.getAttribute("total_price");
-//            Order order = (Order) session.getAttribute("order");
-//            Account account = (Account) session.getAttribute("account");
+            double totalPrice = (double) session.getAttribute("total_price");
+            Order order = (Order) session.getAttribute("order");
+            Account account = (Account) session.getAttribute("account");
 
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("checkout.jsp");
+            // Insert order to database.
+            dao.createOrder(account.getId(), totalPrice, order.getCartProducts());
+            session.removeAttribute("order");
+            session.removeAttribute("total_price");
+
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("thankyou.jsp");
             requestDispatcher.forward(request, response);
         }
     }

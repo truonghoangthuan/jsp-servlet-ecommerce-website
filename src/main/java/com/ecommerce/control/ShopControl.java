@@ -22,15 +22,15 @@ public class ShopControl extends HttpServlet {
 
         DAO dao = new DAO();
         // Get 9 products from database to display on each page.
-        List<Product> productList = dao.get9ProductsOfPage(Integer.parseInt(index));
+        List<Product> productList = dao.get12ProductsOfPage(Integer.parseInt(index));
 
         // Get all categories from database.
         List<Category> categoryList = dao.getAllCategories();
 
         // Get total products to count pages.
         int totalProduct = dao.getTotalNumberOfProducts();
-        int totalPages = totalProduct / 10;
-        if (totalProduct % 10 != 0) {
+        int totalPages = totalProduct / 12;
+        if (totalProduct % 12 != 0) {
             totalPages++;
         }
 

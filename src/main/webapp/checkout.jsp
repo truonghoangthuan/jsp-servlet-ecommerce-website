@@ -27,7 +27,8 @@
                     <div class="row mb-5">
                         <div class="col-md-12">
                             <h2 class="h3 mb-3 text-black">Your Order</h2>
-                            <form class="p-3 p-lg-5 border" method="post" action="ckeckout-confirm">
+
+                            <form class="p-3 p-lg-5 border" method="post" action="checkout">
                                 <table class="table site-block-order-table mb-5">
                                     <thead>
                                     <tr>

@@ -98,34 +98,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="site-section site-blocks-2">
-                        <div class="row justify-content-center text-center mb-5">
-                            <div class="col-md-7 site-section-heading pt-4">
-                                <h2>Categories</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <c:forEach items="${category_list}" var="o">
-                                <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                                    <a class="block-2-item" href="shop">
-                                        <figure class="image">
-                                            <img src="static/images/${o.name}.jpg" alt="" class="img-fluid">
-                                        </figure>
-                                        <div class="text">
-                                            <span class="text-uppercase">Collections</span>
-                                            <h3>${o.name}</h3>
-                                        </div>
-                                    </a>
-                                </div>
-                            </c:forEach>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 

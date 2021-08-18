@@ -131,9 +131,9 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">
+                                    <a href="checkout.jsp" class="btn btn-primary btn-lg py-3 btn-block">
                                         Proceed To Checkout
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

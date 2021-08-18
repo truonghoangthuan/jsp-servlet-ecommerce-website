@@ -13,9 +13,4 @@ public class LogoutControl extends HttpServlet {
         session.removeAttribute("account");
         response.sendRedirect("/");
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }

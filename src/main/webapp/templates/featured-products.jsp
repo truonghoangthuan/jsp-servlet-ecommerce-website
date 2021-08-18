@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="nonloop-block-3 owl-carousel">
-                    <c:forEach items="${product_list}" var="o">
+                    <c:forEach items="${product_list}" var="o" begin="0" end="4">
                         <div class="item">
                             <div class="block-4 text-center">
                                 <figure class="block-4-image">
