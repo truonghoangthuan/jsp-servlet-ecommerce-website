@@ -45,7 +45,7 @@
                             </c:if>
 
                             <c:if test="${sessionScope.account == null}">
-                                <li><a href="../login.jsp"><span class="icon icon-person"></span></a></li>
+                                <li><a href="login"><span class="icon icon-person"></span></a></li>
                             </c:if>
 
                             <li><a href="#"><span class="icon icon-heart-o"></span></a></li>

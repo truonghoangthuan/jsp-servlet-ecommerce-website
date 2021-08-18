@@ -29,33 +29,42 @@
                                              data-toggle="dropdown" alt="image"
                                              style="width: 1.5em; border-radius: 50%; margin-right: 10px; margin-bottom: 10px">
                                     </c:if>
+
                                     <c:if test="${account.base64Image == null}">
                                         <img class="icon" src="../static/images/blank_avatar.png"
                                              id="dropdownMenuReference"
                                              data-toggle="dropdown" alt="image"
                                              style="width: 1.5em; border-radius: 50%; margin-right: 10px; margin-bottom: 10px">
                                     </c:if>
+
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
                                         <a class="dropdown-item" href="#">Your profile</a>
                                         <a class="dropdown-item" href="logout">Logout</a>
                                     </div>
                                 </li>
                             </c:if>
+
                             <c:if test="${sessionScope.account == null}">
-                                <li><a href="../login.jsp"><span class="icon icon-person"></span></a></li>
+                                <li><a href="login"><span class="icon icon-person"></span></a></li>
                             </c:if>
+
                             <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+
                             <li>
-                                <a href="cart.jsp" class="site-cart">
+                                <a href="../cart.jsp" class="site-cart">
                                     <span class="icon icon-shopping_cart"></span>
+
                                     <c:if test="${order.cartProducts.size() != null}">
                                         <span class="count">${order.cartProducts.size()}</span>
                                     </c:if>
                                 </a>
                             </li>
-                            <li class="d-inline-block d-md-none ml-md-0"><a href="#"
-                                                                            class="site-menu-toggle js-menu-toggle"><span
-                                    class="icon-menu"></span></a></li>
+
+                            <li class="d-inline-block d-md-none ml-md-0">
+                                <a href="#" class="site-menu-toggle js-menu-toggle">
+                                    <span class="icon-menu"></span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

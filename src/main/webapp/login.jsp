@@ -34,7 +34,7 @@
     <div class="container-login100">
         <div class="shadow-lg p-2 p-lg-5 rounded" data-aos="fade-up">
             <div class="wrap-login100 p-t-50 p-b-90">
-                <form action="login" method="post" class="login100-form validate-form flex-sb flex-w">
+                <form action="login?status=typed" method="post" class="login100-form validate-form flex-sb flex-w">
                     <span class="login100-form-title p-b-51">
                         Login
                     </span>
