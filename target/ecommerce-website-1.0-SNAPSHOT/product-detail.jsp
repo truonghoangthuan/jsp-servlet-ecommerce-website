@@ -34,29 +34,47 @@
                     <p><strong class="text-primary h4">$${product.price}</strong></p>
 
                     <form action="cart?product-id=&quantity=" method="get">
-                        <div class="mb-5">
-                            <div class="input-group mb-3" style="max-width: 120px;">
+                        <div class="mb-3">
+                            <div class="input-group mb-3" style="max-width: 200px;">
+                                <input name="product-id" value="${product.id}" type="hidden">
+
                                 <div class="input-group-prepend">
                                     <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                                 </div>
-                                <input name="product-id" value="${product.id}" type="hidden">
-                                <input name="quantity" type="text" class="form-control text-center" value="1" placeholder=""
-                                       aria-label="Example text with button addon" aria-describedby="button-addon1">
+
+                                <input id="quantity" name="quantity" type="text" class="form-control text-center"
+                                       value="1" placeholder="" aria-label="Example text with button addon"
+                                       aria-describedby="button-addon1" style="max-width: 50px">
+
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                                 </div>
+
+                                <label for="quantity" class="form-label text-black">
+                                    Available products: ${product.amount}
+                                </label>
                             </div>
                         </div>
 
                         <p>
-                            <button type="submit" class="buy-now btn btn-sm btn-primary">
+                            <button type="submit" class="buy-now btn btn-sm btn-primary" ${disabled}>
                                 Add To Cart
                             </button>
                         </p>
                     </form>
-
                 </div>
             </div>
+
+            <c:if test="${alert}">
+                <div class="row justify-content-center mt-3">
+                    <div class="alert alert-danger d-flex justify-content-center" role="alert"
+                         data-aos="fade-up" style="max-width: 800px; min-width: 600px">
+                        <strong class="font-weight-bold">
+                            There are only ${product.amount} available in stock!
+                        </strong>
+                    </div>
+                </div>
+            </c:if>
         </div>
     </div>
 
