@@ -28,7 +28,7 @@ public class ShopControl extends HttpServlet {
             index = "1";
         }
 
-        // Get 9 products from database to display on each page.
+        // Get 12 products from database to display on each page.
         List<Product> productList = productDao.get12ProductsOfPage(Integer.parseInt(index));
 
         // Get all categories from database.

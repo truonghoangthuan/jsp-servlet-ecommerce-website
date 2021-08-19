@@ -38,12 +38,17 @@ public class CartControl extends HttpServlet {
         if (request.getParameter("product-id") != null) {
             // Get the id of product from request.
             productId = Integer.parseInt(request.getParameter("product-id"));
+
             // Get product information from database.
             Product product = productDao.getProduct(productId);
             if (product != null) {
                 // Get the quantity of the adding product.
                 if (request.getParameter("quantity") != null) {
                     quantity = Integer.parseInt(request.getParameter("quantity"));
+                    if (product.getAmount() - quantity < 0) {
+                        response.sendRedirect("product-detail?id="+product.getId()+"&invalid-quantity=1");
+                        return;
+                    }
                 }
                 // Check the product has been added to cart yet.
                 if (session.getAttribute("order") == null) {

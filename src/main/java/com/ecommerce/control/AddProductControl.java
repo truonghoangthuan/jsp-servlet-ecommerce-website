@@ -20,6 +20,7 @@ public class AddProductControl extends HttpServlet {
         double productPrice = Double.parseDouble((request.getParameter("product-price")));
         String productDescription = request.getParameter("product-description");
         int productCategory = Integer.parseInt(request.getParameter("product-category"));
+        int productAmount = Integer.parseInt(request.getParameter("product-amount"));
 
         // Get upload image.
         Part part = request.getPart("product-image");
@@ -32,7 +33,7 @@ public class AddProductControl extends HttpServlet {
 
         // Add product to database.
         ProductDao productDao = new ProductDao();
-        productDao.addProduct(productName, inputStream, productPrice, productDescription, productCategory, sellerId);
+        productDao.addProduct(productName, inputStream, productPrice, productDescription, productCategory, sellerId, productAmount);
         response.sendRedirect("product-management");
     }
 }

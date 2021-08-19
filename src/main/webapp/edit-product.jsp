@@ -32,7 +32,7 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="id" class="text-black">
-                                        Name <span class="text-danger">*</span>
+                                        Product ID <span class="text-danger">*</span>
                                     </label>
 
                                     <input name="product-id" type="text" class="form-control"
@@ -68,7 +68,7 @@
                                         Price <span class="text-danger">*</span>
                                     </label>
 
-                                    <input name="product-price" type="text" class="form-control"
+                                    <input name="product-price" type="number" class="form-control"
                                            id="price" value="${product.price}">
                                 </div>
                             </div>
@@ -82,6 +82,17 @@
                                     <textarea name="product-description" id="description"
                                               cols="30" rows="7"
                                               class="form-control">${product.description}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="amount" class="text-black">
+                                        Amount <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input name="product-amount" type="number" class="form-control"
+                                           id="amount" value="${product.amount}">
                                 </div>
                             </div>
 
