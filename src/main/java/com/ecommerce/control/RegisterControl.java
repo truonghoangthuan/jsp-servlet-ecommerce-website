@@ -1,6 +1,7 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.AccountDao;
+import com.ecommerce.dao.ProductDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -26,7 +27,7 @@ public class RegisterControl extends HttpServlet {
         Part part = request.getPart("profile-image");
         InputStream inputStream = part.getInputStream();
 
-        DAO dao = new DAO();
+        AccountDao accountDao = new AccountDao();
         // Check password and repeatPassword are the same.
         if (!password.equals(repeatPassword)) {
             String alert = "<div class=\"alert alert-danger wrap-input100\">\n" +
@@ -38,7 +39,7 @@ public class RegisterControl extends HttpServlet {
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }
         // Check username is existed or not from database.
-        else if (dao.checkUsernameExists(username)) {
+        else if (accountDao.checkUsernameExists(username)) {
             String alert = "<div class=\"alert alert-danger wrap-input100\">\n" +
                     "                        <p style=\"font-family: Ubuntu-Bold; font-size: 18px; margin: 0.25em 0; text-align: center\">\n" +
                     "                            Username already exist!\n" +
@@ -49,7 +50,7 @@ public class RegisterControl extends HttpServlet {
         }
         // Insert username, password to database and create account.
         else {
-            dao.createAccount(username, password, inputStream);
+            accountDao.createAccount(username, password, inputStream);
             String alert = "<div class=\"alert alert-success wrap-input100\">\n" +
                     "                        <p style=\"font-family: Ubuntu-Bold; font-size: 18px; margin: 0.25em 0; text-align: center\">\n" +
                     "                            Create account successfully!\n" +

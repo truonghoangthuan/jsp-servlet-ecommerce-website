@@ -1,6 +1,6 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.entity.CartProduct;
 import com.ecommerce.entity.Order;
 import com.ecommerce.entity.Product;
@@ -18,7 +18,7 @@ import java.util.List;
 @WebServlet(name = "CartControl", value = "/cart")
 public class CartControl extends HttpServlet {
     // Call DAO class to access with database.
-    DAO dao = new DAO();
+    ProductDao productDao = new ProductDao();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class CartControl extends HttpServlet {
             // Get the id of product from request.
             productId = Integer.parseInt(request.getParameter("product-id"));
             // Get product information from database.
-            Product product = dao.getProduct(productId);
+            Product product = productDao.getProduct(productId);
             if (product != null) {
                 // Get the quantity of the adding product.
                 if (request.getParameter("quantity") != null) {

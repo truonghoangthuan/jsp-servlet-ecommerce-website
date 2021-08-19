@@ -1,6 +1,6 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.AccountDao;
 import com.ecommerce.entity.Account;
 
 import javax.servlet.ServletException;
@@ -11,13 +11,13 @@ import java.io.IOException;
 @WebServlet(name = "LoginControl", value = "/login")
 public class LoginControl extends HttpServlet {
     // Call DAO class to access with database.
-    DAO dao = new DAO();
+    AccountDao accountDao = new AccountDao();
 
     private Account getAccountCookie(HttpServletRequest request) {
         // Get list cookies of the browser.
         Cookie[] cookies = request.getCookies();
 
-        Account account = null;
+        Account account;
         String username = "";
         String password = "";
         for (Cookie cookie : cookies) {
@@ -28,7 +28,7 @@ public class LoginControl extends HttpServlet {
                 password = cookie.getValue();
             }
         }
-        account = dao.checkLoginAccount(username, password);
+        account = accountDao.checkLoginAccount(username, password);
         return account;
     }
 
@@ -61,7 +61,7 @@ public class LoginControl extends HttpServlet {
         String password = request.getParameter("password");
 
         // Check account in database.
-        Account account = dao.checkLoginAccount(username, password);
+        Account account = accountDao.checkLoginAccount(username, password);
         if (account == null && status.equals("typed")) {
             // An alert to send to login page.
             String alert = "<div class=\"alert alert-danger wrap-input100\">\n" +

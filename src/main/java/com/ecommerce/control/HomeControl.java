@@ -1,27 +1,31 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.CategoryDao;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
-import java.io.*;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "HomeControl", value = "")
 public class HomeControl extends HttpServlet {
+    // Call DAO class to access with database.
+    ProductDao productDao = new ProductDao();
+    CategoryDao categoryDao = new CategoryDao();
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        DAO dao = new DAO();
         // Get all products from database.
-        List<Product> productList = dao.getAllProducts();
+        List<Product> productList = productDao.getAllProducts();
         // Get all categories from database.
-        List<Category> categoryList = dao.getAllCategories();
+        List<Category> categoryList = categoryDao.getAllCategories();
         // Set attribute active class for home in header.
         String active = "active";
 

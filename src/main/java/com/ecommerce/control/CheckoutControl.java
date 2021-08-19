@@ -1,6 +1,6 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.OrderDao;
 import com.ecommerce.entity.Account;
 import com.ecommerce.entity.Order;
 
@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "CheckoutControl", value = "/checkout")
 public class CheckoutControl extends HttpServlet {
     // Call DAO class to access with database.
-    DAO dao = new DAO();
+    OrderDao orderDao = new OrderDao();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class CheckoutControl extends HttpServlet {
             Account account = (Account) session.getAttribute("account");
 
             // Insert order to database.
-            dao.createOrder(account.getId(), totalPrice, order.getCartProducts());
+            orderDao.createOrder(account.getId(), totalPrice, order.getCartProducts());
             session.removeAttribute("order");
             session.removeAttribute("total_price");
 

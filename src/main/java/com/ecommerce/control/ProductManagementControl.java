@@ -1,18 +1,27 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.CategoryDao;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.entity.Account;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "ProductManagementControl", value = "/product-management")
 public class ProductManagementControl extends HttpServlet {
+    // Call DAO class to access with database.
+    ProductDao productDao = new ProductDao();
+    CategoryDao categoryDao = new CategoryDao();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get the seller id from session.
@@ -20,10 +29,9 @@ public class ProductManagementControl extends HttpServlet {
         Account account = (Account) session.getAttribute("account");
         int sellerId = account.getId();
         // Get products of seller from database.
-        DAO dao = new DAO();
-        List<Product> productList = dao.getSellerProducts(sellerId);
+        List<Product> productList = productDao.getSellerProducts(sellerId);
         // Get all category for category selection.
-        List<Category> categoryList = dao.getAllCategories();
+        List<Category> categoryList = categoryDao.getAllCategories();
         // Set attribute active class for home in header.
         String active = "active";
 

@@ -67,8 +67,10 @@
                                     </c:forEach>
 
                                     <tr>
-                                        <td class="text-black font-weight-bold" colspan="2"><strong>Order Total</strong></td>
-                                        <td class="text-black font-weight-bold" colspan="2">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                                        <td class="text-black font-weight-bold">
                                             <input name="order-total-price" class="form-control-plaintext h5 text-black"
                                                    value="${total_price}" style="text-align: center" readonly>
                                         </td>

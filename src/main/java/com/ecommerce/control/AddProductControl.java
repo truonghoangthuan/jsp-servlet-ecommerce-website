@@ -1,6 +1,6 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.entity.Account;
 
 import javax.servlet.ServletException;
@@ -31,8 +31,8 @@ public class AddProductControl extends HttpServlet {
         int sellerId = account.getId();
 
         // Add product to database.
-        DAO dao = new DAO();
-        dao.addProduct(productName, inputStream, productPrice, productDescription, productCategory, sellerId);
+        ProductDao productDao = new ProductDao();
+        productDao.addProduct(productName, inputStream, productPrice, productDescription, productCategory, sellerId);
         response.sendRedirect("product-management");
     }
 }

@@ -1,9 +1,6 @@
 package com.ecommerce.dao;
 
 import com.ecommerce.database.Database;
-import com.ecommerce.entity.Account;
-import com.ecommerce.entity.CartProduct;
-import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
 import java.io.ByteArrayOutputStream;
@@ -14,14 +11,17 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-public class DAO {
+public class ProductDao {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
+    // Call DAO class to access other entities' database.
+    AccountDao accountDao = new AccountDao();
+    CategoryDao categoryDao = new CategoryDao();
+
     public static void main(String[] args) {
-        DAO dao = new DAO();
-        System.out.println(dao.getLastOrderId());
+        ProductDao productDao = new ProductDao();
     }
 
     // Method to get blob image from database.
@@ -42,7 +42,7 @@ public class DAO {
     // Method to get all products from database.
     public List<Product> getAllProducts() {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM product";
+        String query = "SELECT * FROM product WHERE product_is_deleted = false";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -53,12 +53,16 @@ public class DAO {
                 String name = resultSet.getString(2);
                 double price = resultSet.getDouble(4);
                 String description = resultSet.getString(5);
+                String category = categoryDao.getCategory(resultSet.getInt(6)).getName();
+                String account = accountDao.getAccount(resultSet.getInt(7)).getName();
+                boolean isDelete = resultSet.getBoolean(8);
+                int amount = resultSet.getInt(9);
 
                 // Get base64 image to display.
                 Blob blob = resultSet.getBlob(3);
                 String base64Image = getBase64Image(blob);
 
-                list.add(new Product(id, name, base64Image, price, description));
+                list.add(new Product(id, name, base64Image, price, description, category, account, isDelete, amount));
             }
         } catch (SQLException | ClassNotFoundException | IOException e) {
             System.out.println(e.getMessage());
@@ -88,27 +92,6 @@ public class DAO {
         return product;
     }
 
-    // Method to get all categories from database.
-    public List<Category> getAllCategories() {
-        List<Category> list = new ArrayList<>();
-        String query = "SELECT * FROM category";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = new Database().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                list.add(new Category(
-                        resultSet.getInt(1),
-                        resultSet.getString(2)
-                ));
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return list;
-    }
-
     // Method to get a categories by its id from database.
     public List<Product> getAllCategoryProducts(int category_id) {
         List<Product> list = new ArrayList<>();
@@ -123,12 +106,16 @@ public class DAO {
                 String name = resultSet.getString(2);
                 double price = resultSet.getDouble(4);
                 String description = resultSet.getString(5);
+                String category = categoryDao.getCategory(resultSet.getInt(6)).getName();
+                String account = accountDao.getAccount(resultSet.getInt(7)).getName();
+                boolean isDelete = resultSet.getBoolean(8);
+                int amount = resultSet.getInt(9);
 
                 // Get base64 image to display.
                 Blob blob = resultSet.getBlob(3);
                 String base64Image = getBase64Image(blob);
 
-                list.add(new Product(id, name, base64Image, price, description));
+                list.add(new Product(id, name, base64Image, price, description, category, account, isDelete, amount));
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
@@ -139,8 +126,7 @@ public class DAO {
     // Method to search a product by a keyword.
     public List<Product> searchProduct(String keyword) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM product WHERE " +
-                "product_name like '%" + keyword + "%'";
+        String query = "SELECT * FROM product WHERE product_name like '%" + keyword + "%'";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -151,81 +137,21 @@ public class DAO {
                 String name = resultSet.getString(2);
                 double price = resultSet.getDouble(4);
                 String description = resultSet.getString(5);
+                String category = categoryDao.getCategory(resultSet.getInt(6)).getName();
+                String account = accountDao.getAccount(resultSet.getInt(7)).getName();
+                boolean isDelete = resultSet.getBoolean(8);
+                int amount = resultSet.getInt(9);
 
                 // Get base64 image to display.
                 Blob blob = resultSet.getBlob(3);
                 String base64Image = getBase64Image(blob);
 
-                list.add(new Product(id, name, base64Image, price, description));
+                list.add(new Product(id, name, base64Image, price, description, category, account, isDelete, amount));
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
         }
         return list;
-    }
-
-    // Method to get login account from database.
-    public Account checkLoginAccount(String username, String password) {
-        Account account = new Account();
-        String query = "SELECT * FROM account WHERE account_name = '" + username + "' AND account_password = '" + password + "'";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = new Database().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                account.setId(resultSet.getInt(1));
-                account.setName(resultSet.getString(2));
-                account.setPassword(resultSet.getString(3));
-                account.setIsSeller(resultSet.getInt(4));
-                account.setIsAdmin(resultSet.getInt(5));
-
-                // Get profile image from database.
-                if (resultSet.getBlob(6) == null) {
-                    account.setBase64Image(null);
-                } else {
-                    account.setBase64Image(getBase64Image(resultSet.getBlob(6)));
-                }
-
-                return account;
-            }
-        } catch (ClassNotFoundException | SQLException | IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
-    // Method to check is username exist or not.
-    public boolean checkUsernameExists(String username) {
-        String query = "SELECT * FROM account WHERE account_name = '" + username + "'";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = new Database().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    // Method to create an account.
-    public void createAccount(String username, String password, InputStream image) {
-        String query = "INSERT INTO account (account_name, account_password, account_image, account_is_seller, account_is_admin) VALUES (?, ?, ?, 0, 0)";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = new Database().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setBinaryStream(3, image);
-            preparedStatement.executeUpdate();
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     // Method to get all products of a seller.
@@ -242,12 +168,16 @@ public class DAO {
                 String name = resultSet.getString(2);
                 double price = resultSet.getDouble(4);
                 String description = resultSet.getString(5);
+                String category = categoryDao.getCategory(resultSet.getInt(6)).getName();
+                String account = accountDao.getAccount(resultSet.getInt(7)).getName();
+                boolean isDelete = resultSet.getBoolean(8);
+                int amount = resultSet.getInt(9);
 
                 // Get base64 image to display.
                 Blob blob = resultSet.getBlob(3);
                 String base64Image = getBase64Image(blob);
 
-                list.add(new Product(id, name, base64Image, price, description));
+                list.add(new Product(id, name, base64Image, price, description, category, account, isDelete, amount));
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
@@ -324,12 +254,16 @@ public class DAO {
                 String name = resultSet.getString(2);
                 double price = resultSet.getDouble(4);
                 String description = resultSet.getString(5);
+                String category = categoryDao.getCategory(resultSet.getInt(6)).getName();
+                String account = accountDao.getAccount(resultSet.getInt(7)).getName();
+                boolean isDelete = resultSet.getBoolean(8);
+                int amount = resultSet.getInt(9);
 
                 // Get base64 image to display.
                 Blob blob = resultSet.getBlob(3);
                 String base64Image = getBase64Image(blob);
 
-                list.add(new Product(id, name, base64Image, price, description));
+                list.add(new Product(id, name, base64Image, price, description, category, account, isDelete, amount));
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
             System.out.println(e.getMessage());
@@ -355,65 +289,18 @@ public class DAO {
         return totalProduct;
     }
 
-    // Method to get last order id in database.
-    public int getLastOrderId() {
-        String query = "SELECT order_id FROM `order` ORDER BY order_id DESC LIMIT 1";
-        int orderId = 0;
+    // Method to update new amount of products.
+    public void updateProductAmount(int productId, int productAmount) {
+        String query = "UPDATE product SET product_amount = product_amount - ? WHERE product_id = ?";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
             preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                orderId = resultSet.getInt(1);
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return orderId;
-    }
-
-    // Method to insert order information to database.
-    public void createOrder(int accountId, double totalPrice, List<CartProduct> cartProducts) {
-        System.out.println("Account id: " + accountId);
-        System.out.println("total price: " + totalPrice);
-        for (CartProduct cartProduct : cartProducts) {
-            System.out.println("product id: " + cartProduct.getProduct().getId());
-            System.out.println("product quantity: " + cartProduct.getQuantity());
-            System.out.println("product price: " + cartProduct.getPrice());
-        }
-
-        connection = new Database().getConnection();
-        String query = "INSERT INTO `order` (fk_account_id, order_total) VALUES (?, ?);";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, accountId);
-            preparedStatement.setDouble(2, totalPrice);
+            preparedStatement.setInt(1, productAmount);
+            preparedStatement.setInt(2, productId);
             preparedStatement.executeUpdate();
-
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("Create order catch:");
             System.out.println(e.getMessage());
-        }
-
-        String query2 = "INSERT INTO order_detail (fk_order_id, fk_product_id, product_quantity, product_price) VALUES (?, ?, ?, ?);";
-        // Get latest orderId to insert list of cartProduct to order.
-        int orderId = getLastOrderId();
-        System.out.println("Order id: " + orderId);
-        for (CartProduct cartProduct : cartProducts) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                preparedStatement = connection.prepareStatement(query2);
-                preparedStatement.setInt(1, orderId);
-                preparedStatement.setInt(2, cartProduct.getProduct().getId());
-                preparedStatement.setInt(3, cartProduct.getQuantity());
-                preparedStatement.setDouble(4, cartProduct.getPrice());
-                preparedStatement.executeUpdate();
-            } catch (SQLException | ClassNotFoundException e) {
-                System.out.println("Create order_detail catch:");
-                System.out.println(e.getMessage());
-            }
         }
     }
 }

@@ -1,17 +1,25 @@
 package com.ecommerce.control;
 
+import com.ecommerce.dao.CategoryDao;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
-import com.ecommerce.dao.DAO;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "ShopControl", value = "/shop")
 public class ShopControl extends HttpServlet {
+    // Call DAO class to access with database.
+    ProductDao productDao = new ProductDao();
+    CategoryDao categoryDao = new CategoryDao();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get page number from request.
@@ -20,15 +28,14 @@ public class ShopControl extends HttpServlet {
             index = "1";
         }
 
-        DAO dao = new DAO();
         // Get 9 products from database to display on each page.
-        List<Product> productList = dao.get12ProductsOfPage(Integer.parseInt(index));
+        List<Product> productList = productDao.get12ProductsOfPage(Integer.parseInt(index));
 
         // Get all categories from database.
-        List<Category> categoryList = dao.getAllCategories();
+        List<Category> categoryList = categoryDao.getAllCategories();
 
         // Get total products to count pages.
-        int totalProduct = dao.getTotalNumberOfProducts();
+        int totalProduct = productDao.getTotalNumberOfProducts();
         int totalPages = totalProduct / 12;
         if (totalProduct % 12 != 0) {
             totalPages++;

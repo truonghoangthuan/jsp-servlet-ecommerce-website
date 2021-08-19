@@ -1,6 +1,6 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.ProductDao;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,8 +14,8 @@ public class RemoveProductControl extends HttpServlet {
         // Get the id of the product that need to remove from request.
         int productId = Integer.parseInt(request.getParameter("product-id"));
         // Remove product from database.
-        DAO dao = new DAO();
-        dao.removeProduct(productId);
+        ProductDao productDao = new ProductDao();
+        productDao.removeProduct(productId);
 
         response.sendRedirect("product-management");
     }

@@ -1,6 +1,6 @@
 package com.ecommerce.control;
 
-import com.ecommerce.dao.DAO;
+import com.ecommerce.dao.ProductDao;
 import com.ecommerce.entity.Product;
 
 import javax.servlet.*;
@@ -16,11 +16,11 @@ public class ProductDetail extends HttpServlet {
         // Get the id of selected product.
         int id = Integer.parseInt(request.getParameter("id"));
 
-        DAO dao = new DAO();
+        ProductDao productDao = new ProductDao();
         // Get product from database with the given id.
-        Product product = dao.getProduct(id);
+        Product product = productDao.getProduct(id);
         // Get all products for feature section.
-        List<Product> productList = dao.getAllProducts();
+        List<Product> productList = productDao.getAllProducts();
         // Set attribute active class for home in header.
         String active = "active";
 

@@ -5,6 +5,10 @@ public class Product {
     private String name;
     private double price;
     private String description;
+    private String category;
+    private String account;
+    private boolean isDelete;
+    private int amount;
 
     private byte[] image;
     private String base64Image;
@@ -13,12 +17,16 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, String name, String base64image, double price, String description) {
+    public Product(int id, String name, String base64Image, double price, String description, String category, String account, boolean isDelete, int amount) {
         this.id = id;
         this.name = name;
-        this.base64Image = base64image;
+        this.base64Image = base64Image;
         this.price = price;
         this.description = description;
+        this.category = category;
+        this.account = account;
+        this.isDelete = isDelete;
+        this.amount = amount;
     }
 
     public int getId() {
@@ -67,5 +75,37 @@ public class Product {
 
     public void setBase64Image(String base64Image) {
         this.base64Image = base64Image;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 }
