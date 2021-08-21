@@ -81,7 +81,7 @@
                                                value="${o.price * o.quantity}" style="text-align: center" readonly>
                                     </td>
 
-                                    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
+                                    <td><a href="cart?remove-product-id=${o.product.id}" class="btn btn-primary btn-sm">X</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

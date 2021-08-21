@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @WebServlet(name = "CartControl", value = "/cart")
@@ -20,9 +21,41 @@ public class CartControl extends HttpServlet {
     // Call DAO class to access with database.
     ProductDao productDao = new ProductDao();
 
+    // Method to remove a product from cart.
+    private void removeCartProduct(int productId, Order order, double totalPrice) {
+        // Get list of products from the existing order.
+        List<CartProduct> list = order.getCartProducts();
+
+        // Iterator.remove is the only safe way to modify a collection during iteration
+        for (Iterator<CartProduct> iterator = list.iterator(); iterator.hasNext();) {
+            // Get the cart product object from list.
+            CartProduct cartProduct = iterator.next();
+
+            // Delete the product if its id equals the id of deleting product.
+            if (cartProduct.getProduct().getId() == productId) {
+                // Remove price of deleting product from total price.
+                totalPrice -= (cartProduct.getPrice() * cartProduct.getQuantity());
+
+                // Remove product from cart.
+                iterator.remove();
+            }
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+
+        // Check if request is remove product from cart or not.
+        if (request.getParameter("remove-product-id") != null) {
+            Order order = (Order) session.getAttribute("order");
+            double totalPrice = (double) session.getAttribute("total_price");
+            int productId = Integer.parseInt(request.getParameter("remove-product-id"));
+            removeCartProduct(productId, order, totalPrice);
+            response.sendRedirect("cart.jsp");
+            return;
+        }
+
         int quantity = 1;
         int productId;
 
@@ -44,7 +77,9 @@ public class CartControl extends HttpServlet {
             if (product != null) {
                 // Get the quantity of the adding product.
                 if (request.getParameter("quantity") != null) {
+                    // Get the quantity of the product if the quantity is more than 1.
                     quantity = Integer.parseInt(request.getParameter("quantity"));
+                    // Check if the request quantity is more than the number of products left or not.
                     if (product.getAmount() - quantity < 0) {
                         response.sendRedirect("product-detail?id="+product.getId()+"&invalid-quantity=1");
                         return;
@@ -79,6 +114,7 @@ public class CartControl extends HttpServlet {
                     // Get the list of products from order.
                     List<CartProduct> list = order.getCartProducts();
 
+                    // Increase the product quantity if it is already exist in cart.
                     boolean flag = false;
                     for (CartProduct cartProduct : list) {
                         if (cartProduct.getProduct().getId() == product.getId()) {
@@ -88,6 +124,7 @@ public class CartControl extends HttpServlet {
                         }
                     }
 
+                    // Add new product to existing cart.
                     if (!flag) {
                         CartProduct cartProduct = new CartProduct();
                         cartProduct.setQuantity(quantity);
