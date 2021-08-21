@@ -19,11 +19,8 @@ public class ProductDetail extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Check if the link is send from out of stock request or not.
-        boolean alert = false;
-        if (request.getParameter("invalid-quantity") != null) {
-            alert = true;
-        }
+        // Check if the sending link from out of stock request or not.
+        boolean alert = request.getParameter("invalid-quantity") != null;
         // Get the id of selected product.
         int id = Integer.parseInt(request.getParameter("id"));
 

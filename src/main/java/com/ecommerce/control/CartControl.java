@@ -56,9 +56,9 @@ public class CartControl extends HttpServlet {
             return;
         }
 
+        // Initialize default value for quantity and productId.
         int quantity = 1;
         int productId;
-
         // Check is the total price of order exist or not.
         double totalPrice;
         if (session.getAttribute("total_price") == null) {
@@ -67,7 +67,7 @@ public class CartControl extends HttpServlet {
             totalPrice = (double) session.getAttribute("total_price");
         }
 
-        // If product exist in database generate code.
+        // Generate if product exist in database.
         if (request.getParameter("product-id") != null) {
             // Get the id of product from request.
             productId = Integer.parseInt(request.getParameter("product-id"));

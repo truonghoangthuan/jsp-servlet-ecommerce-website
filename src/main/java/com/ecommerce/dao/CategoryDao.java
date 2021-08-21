@@ -46,12 +46,28 @@ public class CategoryDao {
             while (resultSet.next()) {
                 list.add(new Category(
                         resultSet.getInt(1),
-                        resultSet.getString(2)
+                        resultSet.getString(2),
+                        resultSet.getInt(3)
                 ));
             }
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return list;
+    }
+
+    // Method to decrease amount of category product.
+    public void decreaseCategoryProductAmount(int categoryId, int productAmount) {
+        String query = "UPDATE category SET category_number_product = category_number_product - ? WHERE category_id = ?";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, productAmount);
+            preparedStatement.setInt(2, categoryId);
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

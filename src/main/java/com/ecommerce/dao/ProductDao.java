@@ -1,6 +1,8 @@
 package com.ecommerce.dao;
 
 import com.ecommerce.database.Database;
+import com.ecommerce.entity.Account;
+import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
 
 import java.io.ByteArrayOutputStream;
@@ -22,6 +24,10 @@ public class ProductDao {
 
     public static void main(String[] args) {
         ProductDao productDao = new ProductDao();
+        List<Product> list = productDao.getAllProducts();
+        for (Product product : list) {
+            System.out.println(product.toString());
+        }
     }
 
     // Method to get blob image from database.
@@ -52,8 +58,8 @@ public class ProductDao {
                 String name = resultSet.getString(2);
                 double price = resultSet.getDouble(4);
                 String description = resultSet.getString(5);
-                String category = categoryDao.getCategory(resultSet.getInt(6)).getName();
-                String account = accountDao.getAccount(resultSet.getInt(7)).getName();
+                Category category = categoryDao.getCategory(resultSet.getInt(6));
+                Account account = accountDao.getAccount(resultSet.getInt(7));
                 boolean isDelete = resultSet.getBoolean(8);
                 int amount = resultSet.getInt(9);
 
@@ -90,8 +96,8 @@ public class ProductDao {
                 product.setBase64Image(getBase64Image(resultSet.getBlob(3)));
                 product.setPrice(resultSet.getDouble(4));
                 product.setDescription(resultSet.getString(5));
-                product.setCategory(categoryDao.getCategory(resultSet.getInt(6)).getName());
-                product.setAccount(accountDao.getAccount(resultSet.getInt(7)).getName());
+                product.setCategory(categoryDao.getCategory(resultSet.getInt(6)));
+                product.setAccount(accountDao.getAccount(resultSet.getInt(7)));
                 product.setDelete(resultSet.getBoolean(8));
                 product.setAmount(resultSet.getInt(9));
             }
@@ -198,8 +204,8 @@ public class ProductDao {
         return totalProduct;
     }
 
-    // Method to update new amount of products.
-    public void updateProductAmount(int productId, int productAmount) {
+    // Method to decrease new amount of products.
+    public void decreaseProductAmount(int productId, int productAmount) {
         String query = "UPDATE product SET product_amount = product_amount - ? WHERE product_id = ?";
         try {
             Class.forName("com.mysql.jdbc.Driver");

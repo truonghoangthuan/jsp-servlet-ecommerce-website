@@ -29,6 +29,33 @@ public class OrderDao {
         return orderId;
     }
 
+    // Method to insert order detail information.
+    private void createOrderDetail(List<CartProduct> cartProducts) {
+        String query2 = "INSERT INTO order_detail (fk_order_id, fk_product_id, product_quantity, product_price) VALUES (?, ?, ?, ?);";
+        // Get latest orderId to insert list of cartProduct to order.
+        int orderId = getLastOrderId();
+        // Call ProductDao class to decrease product amount.
+        ProductDao productDao = new ProductDao();
+        // Call CategoryDao class to decrease product amount.
+        CategoryDao categoryDao = new CategoryDao();
+        for (CartProduct cartProduct : cartProducts) {
+            productDao.decreaseProductAmount(cartProduct.getProduct().getId(), cartProduct.getQuantity());
+            categoryDao.decreaseCategoryProductAmount(cartProduct.getProduct().getCategory().getId(), cartProduct.getQuantity());
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                preparedStatement = connection.prepareStatement(query2);
+                preparedStatement.setInt(1, orderId);
+                preparedStatement.setInt(2, cartProduct.getProduct().getId());
+                preparedStatement.setInt(3, cartProduct.getQuantity());
+                preparedStatement.setDouble(4, cartProduct.getPrice());
+                preparedStatement.executeUpdate();
+            } catch (SQLException | ClassNotFoundException e) {
+                System.out.println("Create order_detail catch:");
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     // Method to insert order information to database.
     public void createOrder(int accountId, double totalPrice, List<CartProduct> cartProducts) {
         connection = new Database().getConnection();
@@ -45,25 +72,7 @@ public class OrderDao {
             System.out.println(e.getMessage());
         }
 
-        String query2 = "INSERT INTO order_detail (fk_order_id, fk_product_id, product_quantity, product_price) VALUES (?, ?, ?, ?);";
-        // Get latest orderId to insert list of cartProduct to order.
-        int orderId = getLastOrderId();
-        // Call ProductDao class to update product amount.
-        ProductDao productDao = new ProductDao();
-        for (CartProduct cartProduct : cartProducts) {
-            productDao.updateProductAmount(cartProduct.getProduct().getId(), cartProduct.getQuantity());
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                preparedStatement = connection.prepareStatement(query2);
-                preparedStatement.setInt(1, orderId);
-                preparedStatement.setInt(2, cartProduct.getProduct().getId());
-                preparedStatement.setInt(3, cartProduct.getQuantity());
-                preparedStatement.setDouble(4, cartProduct.getPrice());
-                preparedStatement.executeUpdate();
-            } catch (SQLException | ClassNotFoundException e) {
-                System.out.println("Create order_detail catch:");
-                System.out.println(e.getMessage());
-            }
-        }
+        // Call create order detail method.
+        createOrderDetail(cartProducts);
     }
 }
