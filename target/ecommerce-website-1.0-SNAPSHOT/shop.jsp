@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.ecommerce.dao.CategoryDao" %>
 <% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); %>
 
 <!DOCTYPE html>
@@ -92,7 +93,12 @@
                         <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                         <ul class="list-unstyled mb-0">
                             <c:forEach items="${category_list}" var="o">
-                                <li class="mb-1 active"><a href="category?category_id=${o.id}" class="d-flex"><span>${o.name}</span></a></li>
+                                <li class="mb-1 active">
+                                    <a href="category?category_id=${o.id}" class="d-flex">
+                                        <span>${o.name}</span>
+                                        <span class="text-black ml-auto">(${o.totalCategoryProduct})</span>
+                                    </a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>

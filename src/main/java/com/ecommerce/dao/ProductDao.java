@@ -24,7 +24,7 @@ public class ProductDao {
 
     public static void main(String[] args) {
         ProductDao productDao = new ProductDao();
-        List<Product> list = productDao.getAllProducts();
+        List<Product> list = productDao.getSellerProducts(1);
         for (Product product : list) {
             System.out.println(product.toString());
         }
@@ -98,7 +98,7 @@ public class ProductDao {
                 product.setDescription(resultSet.getString(5));
                 product.setCategory(categoryDao.getCategory(resultSet.getInt(6)));
                 product.setAccount(accountDao.getAccount(resultSet.getInt(7)));
-                product.setDelete(resultSet.getBoolean(8));
+                product.setDeleted(resultSet.getBoolean(8));
                 product.setAmount(resultSet.getInt(9));
             }
         } catch (SQLException | ClassNotFoundException | IOException e) {
@@ -126,7 +126,15 @@ public class ProductDao {
     }
 
     // Method to remove a product from database by its id.
-    public void removeProduct(int productId) {
+    public void removeProduct(Product product) {
+        // Get id of the product.
+        int productId = product.getId();
+        // Get id of the product category.
+        int categoryId = product.getCategory().getId();
+
+        // Decrease the amount of product from category.
+        categoryDao.decreaseCategoryProductAmount(categoryId, 1);
+
         String query = "UPDATE product SET product_is_deleted = true WHERE product_id = " + productId;
         try {
             Class.forName("com.mysql.jdbc.Driver");

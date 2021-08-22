@@ -27,31 +27,34 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Product name</th>
                                 <th>Image</th>
+                                <th>ID</th>
+                                <th style="max-width: 120px">Product name</th>
                                 <th>Price</th>
-                                <th>Edit / Remove</th>
+                                <th>Category</th>
+                                <th>Total amount</th>
+                                <th>Deleted / Selling</th>
+                                <th style="min-width: 195px">Edit / Remove</th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${product_list}" var="o">
                                 <tr>
-                                    <td>
-                                            ${o.id}
-                                    </td>
-
-                                    <td>
-                                        <h2 class="h5 text-black">${o.name}</h2>
-                                    </td>
-
                                     <td class="product-thumbnail">
                                         <img src="data:image/jpg;base64,${o.base64Image}" alt="Image" class="img-fluid">
                                     </td>
 
-                                    <td>
-                                        $${o.price}
-                                    </td>
+                                    <td>${o.id}</td>
+
+                                    <td>${o.name}</td>
+
+                                    <td>$${o.price}</td>
+
+                                    <td>${o.category.name}</td>
+
+                                    <td>${o.amount}</td>
+
+                                    <td>${(o.isDeleted) ? "Deleted" : "Selling"}</td>
 
                                     <td>
                                         <a href="edit-product?product-id=${o.id}" class="btn btn-primary btn-sm"

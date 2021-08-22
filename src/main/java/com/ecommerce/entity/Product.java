@@ -1,7 +1,5 @@
 package com.ecommerce.entity;
 
-import java.util.Arrays;
-
 public class Product {
     private int id;
     private String name;
@@ -9,7 +7,7 @@ public class Product {
     private String description;
     private Category category;
     private Account account;
-    private boolean isDelete;
+    private boolean isDeleted;
     private int amount;
 
     private byte[] image;
@@ -19,7 +17,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, String name, String base64Image, double price, String description, Category category, Account account, boolean isDelete, int amount) {
+    public Product(int id, String name, String base64Image, double price, String description, Category category, Account account, boolean isDeleted, int amount) {
         this.id = id;
         this.name = name;
         this.base64Image = base64Image;
@@ -27,7 +25,7 @@ public class Product {
         this.description = description;
         this.category = category;
         this.account = account;
-        this.isDelete = isDelete;
+        this.isDeleted = isDeleted;
         this.amount = amount;
     }
 
@@ -103,12 +101,12 @@ public class Product {
         this.amount = amount;
     }
 
-    public boolean isDelete() {
-        return isDelete;
+    public boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setDelete(boolean delete) {
-        isDelete = delete;
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override
@@ -120,7 +118,7 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", category=" + category +
                 ", account=" + account +
-                ", isDelete=" + isDelete +
+                ", isDeleted=" + isDeleted +
                 ", amount=" + amount +
                 '}';
     }
