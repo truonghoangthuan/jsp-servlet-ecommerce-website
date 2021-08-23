@@ -15,6 +15,24 @@ public class CategoryDao {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
+    // Method to set amount of products for category.
+    private void queryCategoryProductAmount(Category category) {
+        int productId = category.getId();
+        String query = "SELECT COUNT(*) FROM product WHERE fk_category_id = " + productId + " AND product_is_deleted = false";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                category.setTotalCategoryProduct(resultSet.getInt(1));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Get category products amount catch: ");
+            System.out.println(e.getMessage());
+        }
+    }
+
     // Method to get category by id.
     public Category getCategory(int categoryId) {
         Category category = new Category();
@@ -31,6 +49,10 @@ public class CategoryDao {
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
+
+        // Call method to set category amount for category.
+        queryCategoryProductAmount(category);
+
         return category;
     }
 
@@ -44,30 +66,20 @@ public class CategoryDao {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new Category(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getInt(3)
-                ));
+                Category category = new Category();
+                category.setId(resultSet.getInt(1));
+                category.setName(resultSet.getString(2));
+                list.add(category);
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return list;
-    }
 
-    // Method to decrease amount of category product.
-    public void decreaseCategoryProductAmount(int categoryId, int productAmount) {
-        String query = "UPDATE category SET category_number_product = category_number_product - ? WHERE category_id = ?";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = new Database().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, productAmount);
-            preparedStatement.setInt(2, categoryId);
-            preparedStatement.executeUpdate();
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
+        // Call method to set category amount for category.
+        for (Category category : list) {
+            queryCategoryProductAmount(category);
         }
+
+        return list;
     }
 }

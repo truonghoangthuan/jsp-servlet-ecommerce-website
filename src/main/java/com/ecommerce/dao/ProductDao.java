@@ -129,11 +129,6 @@ public class ProductDao {
     public void removeProduct(Product product) {
         // Get id of the product.
         int productId = product.getId();
-        // Get id of the product category.
-        int categoryId = product.getCategory().getId();
-
-        // Decrease the amount of product from category.
-        categoryDao.decreaseCategoryProductAmount(categoryId, 1);
 
         String query = "UPDATE product SET product_is_deleted = true WHERE product_id = " + productId;
         try {

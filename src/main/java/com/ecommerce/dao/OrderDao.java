@@ -31,19 +31,16 @@ public class OrderDao {
 
     // Method to insert order detail information.
     private void createOrderDetail(List<CartProduct> cartProducts) {
-        String query2 = "INSERT INTO order_detail (fk_order_id, fk_product_id, product_quantity, product_price) VALUES (?, ?, ?, ?);";
+        String query = "INSERT INTO order_detail (fk_order_id, fk_product_id, product_quantity, product_price) VALUES (?, ?, ?, ?);";
         // Get latest orderId to insert list of cartProduct to order.
         int orderId = getLastOrderId();
         // Call ProductDao class to decrease product amount.
         ProductDao productDao = new ProductDao();
-        // Call CategoryDao class to decrease product amount.
-        CategoryDao categoryDao = new CategoryDao();
         for (CartProduct cartProduct : cartProducts) {
             productDao.decreaseProductAmount(cartProduct.getProduct().getId(), cartProduct.getQuantity());
-            categoryDao.decreaseCategoryProductAmount(cartProduct.getProduct().getCategory().getId(), cartProduct.getQuantity());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                preparedStatement = connection.prepareStatement(query2);
+                preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setInt(1, orderId);
                 preparedStatement.setInt(2, cartProduct.getProduct().getId());
                 preparedStatement.setInt(3, cartProduct.getQuantity());

@@ -38,4 +38,13 @@ public class Category {
     public void setTotalCategoryProduct(int totalCategoryProduct) {
         this.totalCategoryProduct = totalCategoryProduct;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", totalCategoryProduct=" + totalCategoryProduct +
+                '}';
+    }
 }
