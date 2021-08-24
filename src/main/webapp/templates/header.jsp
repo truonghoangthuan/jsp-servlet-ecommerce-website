@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); %>
 
 <header class="site-navbar" role="banner">
     <div class="site-navbar-top">
@@ -38,7 +39,7 @@
                                     </c:if>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                        <a class="dropdown-item" href="#">Your profile</a>
+                                        <a class="dropdown-item" href="profile-page">Your profile</a>
                                         <a class="dropdown-item" href="logout">Logout</a>
                                     </div>
                                 </li>
@@ -47,8 +48,6 @@
                             <c:if test="${sessionScope.account == null}">
                                 <li><a href="login"><span class="icon icon-person"></span></a></li>
                             </c:if>
-
-                            <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
 
                             <li>
                                 <a href="../cart.jsp" class="site-cart">

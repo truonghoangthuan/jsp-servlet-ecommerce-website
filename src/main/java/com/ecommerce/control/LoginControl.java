@@ -39,7 +39,7 @@ public class LoginControl extends HttpServlet {
 
         session.setAttribute("account", account);
         if (rememberMe) {
-            Cookie usernameCookie = new Cookie("username", account.getName());
+            Cookie usernameCookie = new Cookie("username", account.getUsername());
             usernameCookie.setMaxAge(600);
             response.addCookie(usernameCookie);
 

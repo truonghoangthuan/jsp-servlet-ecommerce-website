@@ -62,7 +62,8 @@
                                             <span class="icon icon-pencil"></span>
                                         </a>
 
-                                        <a href="remove-product?product-id=${o.id}" class="btn btn-primary btn-sm"
+                                        <a href="remove-product?product-id=${o.id}"
+                                           class="btn btn-primary btn-sm ${(o.isDeleted) ? "disabled" : " "}"
                                            style="background-color: red ; border-color: red">
                                             <span class="icon icon-trash"></span>
                                         </a>

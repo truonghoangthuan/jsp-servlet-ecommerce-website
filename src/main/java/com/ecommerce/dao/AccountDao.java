@@ -29,10 +29,9 @@ public class AccountDao {
         return Base64.getEncoder().encodeToString(imageBytes);
     }
 
-    // Method to get account by id.
-    public Account getAccount(int accountId) {
+    // Method to execute get account query.
+    private Account queryGetAccount(String query) {
         Account account = new Account();
-        String query = "SELECT * FROM account WHERE account_id = " + accountId;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = new Database().getConnection();
@@ -40,10 +39,15 @@ public class AccountDao {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 account.setId(resultSet.getInt(1));
-                account.setName(resultSet.getString(2));
+                account.setUsername(resultSet.getString(2));
                 account.setPassword(resultSet.getString(3));
                 account.setIsSeller(resultSet.getInt(4));
                 account.setIsAdmin(resultSet.getInt(5));
+                account.setAddress(resultSet.getString(7));
+                account.setFirstName(resultSet.getString(8));
+                account.setLastName(resultSet.getString(9));
+                account.setEmail(resultSet.getString(10));
+                account.setPhone(resultSet.getString(11));
 
                 // Get profile image from database.
                 if (resultSet.getBlob(6) == null) {
@@ -60,52 +64,22 @@ public class AccountDao {
         return null;
     }
 
+    // Method to get account by id.
+    public Account getAccount(int accountId) {
+        String query = "SELECT * FROM account WHERE account_id = " + accountId;
+        return queryGetAccount(query);
+    }
+
     // Method to get login account from database.
     public Account checkLoginAccount(String username, String password) {
-        Account account = new Account();
         String query = "SELECT * FROM account WHERE account_name = '" + username + "' AND account_password = '" + password + "'";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = new Database().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                account.setId(resultSet.getInt(1));
-                account.setName(resultSet.getString(2));
-                account.setPassword(resultSet.getString(3));
-                account.setIsSeller(resultSet.getInt(4));
-                account.setIsAdmin(resultSet.getInt(5));
-
-                // Get profile image from database.
-                if (resultSet.getBlob(6) == null) {
-                    account.setBase64Image(null);
-                } else {
-                    account.setBase64Image(getBase64Image(resultSet.getBlob(6)));
-                }
-
-                return account;
-            }
-        } catch (ClassNotFoundException | SQLException | IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+        return queryGetAccount(query);
     }
 
     // Method to check is username exist or not.
     public boolean checkUsernameExists(String username) {
         String query = "SELECT * FROM account WHERE account_name = '" + username + "'";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = new Database().getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
+        return (queryGetAccount(query) != null);
     }
 
     // Method to create an account.

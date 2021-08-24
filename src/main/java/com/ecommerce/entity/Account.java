@@ -2,23 +2,34 @@ package com.ecommerce.entity;
 
 public class Account {
     private int id;
-    private String name;
+    private String username;
     private String password;
     private int isSeller;
     private int isAdmin;
+    private String address;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
 
     private byte[] image;
     private String base64Image;
 
     public Account() {
+
     }
 
-    public Account(int id, String name, String password, int isSeller, int isAdmin, String base64Image) {
+    public Account(int id, String username, String password, int isSeller, int isAdmin, String address, String firstName, String lastName, String email, String phone, String base64Image) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.password = password;
         this.isSeller = isSeller;
         this.isAdmin = isAdmin;
+        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
         this.base64Image = base64Image;
     }
 
@@ -54,12 +65,12 @@ public class Account {
         this.isAdmin = isAdmin;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public byte[] getImage() {
@@ -76,5 +87,45 @@ public class Account {
 
     public void setBase64Image(String base64Image) {
         this.base64Image = base64Image;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
