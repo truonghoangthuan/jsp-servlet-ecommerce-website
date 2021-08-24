@@ -97,4 +97,31 @@ public class AccountDao {
             System.out.println(e.getMessage());
         }
     }
+
+    // Method to update profile information.
+    public void updateProfileInformation(int accountId, String firstName, String lastName, String address, String email, String phone, InputStream image) {
+        String query = "UPDATE account SET " +
+                "account_first_name = ?, " +
+                "account_last_name = ?, " +
+                "account_address = ?, " +
+                "account_email = ?, " +
+                "account_phone = ?, " +
+                "account_image = ?" +
+                "WHERE account_id = ?";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, address);
+            preparedStatement.setString(4, email);
+            preparedStatement.setString(5, phone);
+            preparedStatement.setBinaryStream(6, image);
+            preparedStatement.setInt(7, accountId);
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Update profile catch: " + e.getMessage());
+        }
+    }
 }

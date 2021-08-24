@@ -22,26 +22,36 @@
 
     <div class="site-section">
         <div class="container">
-            <div class="row">
+            <form class="row" action="profile-page" method="post" enctype="multipart/form-data">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
                             <h2 class="h3 mb-3 text-black">Profile image</h2>
 
-                            <div class="p-3 border">
-                                <c:if test="${account.base64Image != null}">
-                                    <img class="icon" src="data:image/jpg;base64,${account.base64Image}"
-                                         id="dropdownMenuReference"
-                                         data-toggle="dropdown" alt="image"
-                                         style="width: 20em; border-radius: 50%;">
-                                </c:if>
+                            <div class="p-3 border d-flex justify-content-center">
+                                <label class="m-0" for="imgInp">
+                                    <figure class="d-flex justify-content-center m-0">
+                                        <c:if test="${account.base64Image != null}">
+                                            <img class="icon" src="data:image/jpg;base64,${account.base64Image}"
+                                                 id="blah"
+                                                 data-toggle="dropdown" alt="image"
+                                                 style="width: 15em; height: 15em; border-radius: 50%;">
+                                        </c:if>
 
-                                <c:if test="${account.base64Image == null}">
-                                    <img class="icon" src="../static/images/blank_avatar.png"
-                                         id="dropdownMenuReference"
-                                         data-toggle="dropdown" alt="image"
-                                         style="width: 20em; border-radius: 50%;">
-                                </c:if>
+                                        <c:if test="${account.base64Image == null}">
+                                            <img class="icon" src="../static/images/blank_avatar.png"
+                                                 id="blah"
+                                                 data-toggle="dropdown" alt="image"
+                                                 style="width: 15em; height: 15em; border-radius: 50%;">
+                                        </c:if>
+                                    </figure>
+
+                                    <figcaption style="text-align: center">
+                                        Click here to change profile image
+                                    </figcaption>
+                                </label>
+
+                                <input name="profile-image" type="file" id="imgInp" style="display: none;">
                             </div>
                         </div>
                     </div>
@@ -53,70 +63,84 @@
                     <div class="p-3 p-lg-5 border">
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="c_fname" class="text-black">
+                                <label for="first-name" class="text-black">
                                     First Name <span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text" class="form-control" id="c_fname" name="c_fname"
+                                <input type="text" class="form-control" id="first-name" name="first-name"
                                        value="${account.firstName}">
                             </div>
+
                             <div class="col-md-6">
-                                <label for="c_lname" class="text-black">
+                                <label for="last-name" class="text-black">
                                     Last Name <span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text" class="form-control" id="c_lname" name="c_lname"
+                                <input type="text" class="form-control" id="last-name" name="last-name"
                                        value="${account.lastName}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="c_address" class="text-black">
+                                <label for="address" class="text-black">
                                     Address <span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text" class="form-control" id="c_address" name="c_address"
+                                <input type="text" class="form-control" id="address" name="address"
                                        value="${account.address}">
                             </div>
                         </div>
 
                         <div class="form-group row mb-5">
                             <div class="col-md-6">
-                                <label for="c_email_address" class="text-black">
+                                <label for="email" class="text-black">
                                     Email Address <span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text" class="form-control" id="c_email_address" name="c_email_address"
+                                <input type="text" class="form-control" id="email" name="email"
                                        value="${account.email}">
                             </div>
                             <div class="col-md-6">
-                                <label for="c_phone" class="text-black">
+                                <label for="phone" class="text-black">
                                     Phone <span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text" class="form-control" id="c_phone" name="c_phone"
+                                <input type="text" class="form-control" id="phone" name="phone"
                                        value="${account.phone}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="c_order_notes" class="text-black">
-                                Order Notes
+                            <label for="summary" class="text-black">
+                                Summary
                             </label>
 
-                            <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
+                            <textarea name="summary" id="summary" cols="30" rows="5" class="form-control"
                                       placeholder="Write your notes here..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Update profile</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <jsp:include page="templates/footer.jsp"/>
 </div>
 
+
+<script>
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+</script>
 <jsp:include page="templates/scripts.jsp"/>
 </body>
 </html>

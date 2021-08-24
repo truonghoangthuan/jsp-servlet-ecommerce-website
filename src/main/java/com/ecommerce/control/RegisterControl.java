@@ -1,7 +1,6 @@
 package com.ecommerce.control;
 
 import com.ecommerce.dao.AccountDao;
-import com.ecommerce.dao.ProductDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +15,9 @@ import java.io.InputStream;
 @WebServlet(name = "RegisterControl", value = "/register")
 @MultipartConfig
 public class RegisterControl extends HttpServlet {
+    // Call DAO class to access with database.
+    AccountDao accountDao = new AccountDao();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get username and password from request.
@@ -27,7 +29,6 @@ public class RegisterControl extends HttpServlet {
         Part part = request.getPart("profile-image");
         InputStream inputStream = part.getInputStream();
 
-        AccountDao accountDao = new AccountDao();
         // Check password and repeatPassword are the same.
         if (!password.equals(repeatPassword)) {
             String alert = "<div class=\"alert alert-danger wrap-input100\">\n" +
