@@ -22,13 +22,69 @@
 
     <div class="site-section">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
+            <form class="row" method="post" action="checkout">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <h2 class="h3 mb-3 text-black">Billing Details</h2>
+
+                    <div class="p-3 p-lg-5 border">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="first-name" class="text-black">
+                                    First Name <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="first-name" name="first-name"
+                                       value="${account.firstName}" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="last-name" class="text-black">
+                                    Last Name <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="last-name" name="last-name"
+                                       value="${account.lastName}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="address" class="text-black">
+                                    Address <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="address" name="address"
+                                       value="${account.address}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-5">
+                            <div class="col-md-6">
+                                <label for="email" class="text-black">
+                                    Email Address <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="email" name="email"
+                                       value="${account.email}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="text-black">
+                                    Phone <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                       value="${account.phone}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
                     <div class="row mb-5">
                         <div class="col-md-12">
                             <h2 class="h3 mb-3 text-black">Your Order</h2>
 
-                            <form class="p-3 p-lg-5 border" method="post" action="checkout">
+                            <div class="p-3 p-lg-5 border">
                                 <table class="table site-block-order-table mb-5">
                                     <thead>
                                     <tr>
@@ -83,11 +139,11 @@
                                         Place Order
                                     </button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
