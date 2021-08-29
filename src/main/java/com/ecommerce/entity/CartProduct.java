@@ -1,7 +1,6 @@
 package com.ecommerce.entity;
 
 public class CartProduct {
-    private int id;
     private Product product;
     private int quantity;
     private double price;
@@ -9,19 +8,10 @@ public class CartProduct {
     public CartProduct() {
     }
 
-    public CartProduct(int id, Product product, int quantity, double price) {
-        this.id = id;
+    public CartProduct(Product product, int quantity, double price) {
         this.product = product;
         this.quantity = quantity;
         this.price = price;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Product getProduct() {

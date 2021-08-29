@@ -2,14 +2,19 @@ package com.ecommerce.dao;
 
 import com.ecommerce.database.Database;
 import com.ecommerce.entity.CartProduct;
+import com.ecommerce.entity.Product;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDao {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
+
+    // Call ProductDao class to access with database.
+    ProductDao productDao = new ProductDao();
 
     // Method to get last order id in database.
     public int getLastOrderId() {
@@ -34,8 +39,6 @@ public class OrderDao {
         String query = "INSERT INTO order_detail (fk_order_id, fk_product_id, product_quantity, product_price) VALUES (?, ?, ?, ?);";
         // Get latest orderId to insert list of cartProduct to order.
         int orderId = getLastOrderId();
-        // Call ProductDao class to decrease product amount.
-        ProductDao productDao = new ProductDao();
         for (CartProduct cartProduct : cartProducts) {
             productDao.decreaseProductAmount(cartProduct.getProduct().getId(), cartProduct.getQuantity());
             try {
@@ -71,5 +74,28 @@ public class OrderDao {
 
         // Call create order detail method.
         createOrderDetail(cartProducts);
+    }
+
+    // Method to get order detail list of a seller.
+    public List<CartProduct> getSellerOrderDetail(int productId) {
+        List<CartProduct> list = new ArrayList<>();
+        String query = "SELECT * FROM order_detail WHERE fk_product_id = " + productId;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Product product = productDao.getProduct(resultSet.getInt(1));
+                int productQuantity = resultSet.getInt(3);
+                double productPrice = resultSet.getDouble(4);
+
+                list.add(new CartProduct(product, productQuantity, productPrice));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("get seller order detail catch:");
+            System.out.println(e.getMessage());
+        }
+        return list;
     }
 }

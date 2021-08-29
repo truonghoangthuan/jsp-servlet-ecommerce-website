@@ -80,7 +80,8 @@
                 <li class="${contact_active}"><a href="../contact.jsp">Contact</a></li>
 
                 <c:if test="${sessionScope.account.isSeller == 1}">
-                    <li class="${productm_active}"><a href="product-management">Products management</a></li>
+                    <li class="${product_management_active}"><a href="product-management">Products management</a></li>
+                    <li class="${order_management_active}"><a href="order-management">Orders management</a></li>
                 </c:if>
 
                 <c:if test="${sessionScope.account.isAdmin == 1}">

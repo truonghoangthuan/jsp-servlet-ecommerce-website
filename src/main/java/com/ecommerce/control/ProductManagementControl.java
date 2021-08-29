@@ -32,12 +32,12 @@ public class ProductManagementControl extends HttpServlet {
         List<Product> productList = productDao.getSellerProducts(sellerId);
         // Get all category for category selection.
         List<Category> categoryList = categoryDao.getAllCategories();
-        // Set attribute active class for home in header.
-        String active = "active";
 
         request.setAttribute("category_list", categoryList);
         request.setAttribute("product_list", productList);
-        request.setAttribute("productm_active", active);
+        // Set attribute active status for product management tab in header.
+        request.setAttribute("product_management_active", "active");
+        // Get request dispatcher and render to product-management page.
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("product-management.jsp");
         requestDispatcher.forward(request, response);
     }
