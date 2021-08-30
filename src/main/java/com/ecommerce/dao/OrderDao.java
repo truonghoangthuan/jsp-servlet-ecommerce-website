@@ -2,6 +2,7 @@ package com.ecommerce.dao;
 
 import com.ecommerce.database.Database;
 import com.ecommerce.entity.CartProduct;
+import com.ecommerce.entity.Order;
 import com.ecommerce.entity.Product;
 
 import java.sql.*;
@@ -93,7 +94,30 @@ public class OrderDao {
                 list.add(new CartProduct(product, productQuantity, productPrice));
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("get seller order detail catch:");
+            System.out.println("Query cart product list catch:");
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    // Method to get order history of a customer.
+    public List<Order> getOrderHistory(int accountId) {
+        List<Order> list = new ArrayList<>();
+        String query = "SELECT * FROM `order` WHERE fk_account_id = " + accountId;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int orderId = resultSet.getInt(1);
+                double orderTotal = resultSet.getDouble(3);
+                Date orderDate = resultSet.getDate(4);
+
+                list.add(new Order(orderId, orderTotal, orderDate));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Order history catch:");
             System.out.println(e.getMessage());
         }
         return list;
