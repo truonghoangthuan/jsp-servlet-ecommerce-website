@@ -1,9 +1,11 @@
 package com.ecommerce.dao;
 
 import com.ecommerce.database.Database;
+import com.ecommerce.entity.Account;
 import com.ecommerce.entity.CartProduct;
 import com.ecommerce.entity.Order;
 import com.ecommerce.entity.Product;
+import com.oracle.wls.shaded.org.apache.xpath.operations.Or;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +18,15 @@ public class OrderDao {
 
     // Call ProductDao class to access with database.
     ProductDao productDao = new ProductDao();
+    AccountDao accountDao = new AccountDao();
+
+    public static void main(String[] args) {
+        OrderDao orderDao = new OrderDao();
+        List<CartProduct> list = orderDao.getOrderDetailHistory(1);
+        for (CartProduct cartProduct : list) {
+            System.out.println(cartProduct.toString());
+        }
+    }
 
     // Method to get last order id in database.
     public int getLastOrderId() {
@@ -118,6 +129,29 @@ public class OrderDao {
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Order history catch:");
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    // Method to get order detail history.
+    public List<CartProduct> getOrderDetailHistory(int orderId) {
+        List<CartProduct> list = new ArrayList<>();
+        String query = "SELECT * FROM order_detail WHERE fk_order_id = " + orderId;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = new Database().getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Product product = productDao.getProduct(resultSet.getInt(1));
+                int quantity = resultSet.getInt(3);
+                double price = resultSet.getDouble(4);
+
+                list.add(new CartProduct(product, quantity ,price));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Get order detail catch:");
             System.out.println(e.getMessage());
         }
         return list;

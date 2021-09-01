@@ -37,4 +37,13 @@ public class CartProduct {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "CartProduct{" +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }
