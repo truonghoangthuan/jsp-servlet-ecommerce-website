@@ -1,10 +1,10 @@
 # Ecommerce Website
 
-![alt text](https://github.com/truonghoangthuan/jsp-serlet-ecommerce-website/blob/master/screenshots/home.png)
+![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/home.png?raw=true)
 
-![alt text](https://github.com/truonghoangthuan/jsp-serlet-ecommerce-website/blob/master/screenshots/shop.png)
+![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/shop.png)
 
-![alt text](https://github.com/truonghoangthuan/jsp-serlet-ecommerce-website/blob/master/screenshots/cart.png)
+![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/cart.png)
 
 ## About
 
@@ -69,4 +69,4 @@ If you want to contribute to this project you can email me - trhoangthuan@gmail.
 ## License
 
 This project is licensed under the MIT License - see
-the [LICENSE.md](https://github.com/antkaynak/Keyist-Ecommerce/blob/master/LICENSE) for details.
+the [LICENSE.md](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/LICENSE) for details.
