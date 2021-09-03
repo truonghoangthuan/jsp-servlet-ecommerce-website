@@ -1,11 +1,5 @@
 # Ecommerce Website
 
-![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/home.png?raw=true)
-
-![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/shop.png)
-
-![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/cart.png)
-
 ## About
 
 This project is a simple e-commerce website powered by Java JSP Servlet. Ecommerce is a complex business. It involves
@@ -24,6 +18,14 @@ issues. So, contributions are always welcome :)))
 6. View orders history of sellers/customers.
 7. Update customer/product information.
 ```
+
+## Screenshots
+
+![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/home.png?raw=true)
+
+![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/shop.png)
+
+![alt text](https://github.com/truonghoangthuan/jsp-servlet-ecommerce-website/blob/master/screenshots/cart.png)
 
 ## Prerequisites
 
